@@ -1485,7 +1485,12 @@ export default function MapSection() {
               <span>Shoreline</span>
               <span>&amp;</span>
               <span>Mangrove</span>
-              <span>Evolution</span>
+              <span>
+                Evolution
+                <a className="source-ref" href="#source-2">
+                  2
+                </a>
+              </span>
             </div>
             <div className="timeline-connector timeline-connector-2" />
             <div
@@ -1523,7 +1528,12 @@ export default function MapSection() {
       </div>
       <div className="map-section-gap" />
       <div className="heatmap-title">
-        <span>Sea Temperature Anomaly (°C)</span>
+        <span>
+          Sea Temperature Anomaly (°C)
+          <a className="source-ref" href="#source-3">
+            3
+          </a>
+        </span>
       </div>
       <div className="heatmap-chart-container">
         <AnomalyHeatmap csvUrl={SEA_TEMPERATURE_CSV_URL} unit="°C" activeYear={year} />
@@ -1595,7 +1605,12 @@ export default function MapSection() {
         </div>
       </div>
       <div className="heatmap-title-2">
-        <span>Sea Level Anomaly (m)</span>
+        <span>
+          Sea Level Anomaly (m)
+          <a className="source-ref" href="#source-4">
+            4
+          </a>
+        </span>
       </div>
       <div className="heatmap-chart-container-2">
         <AnomalyHeatmap csvUrl={SEA_LEVEL_CSV_URL} unit="m" activeYear={year} />
@@ -1625,7 +1640,12 @@ export default function MapSection() {
         </div>
       </div>
       <div className="weather-station-title">
-        <span>Weather station title</span>
+        <span>
+          Meteorological Stations
+          <a className="source-ref" href="#source-5">
+            5
+          </a>
+        </span>
       </div>
       <div className="weather-station-text">
         <span>
@@ -1667,7 +1687,60 @@ export default function MapSection() {
       </div>
       <div className="map-section-separator" />
       <div className="map-section-copyright">
-        <span>© copyright and sources — placeholder, to be completed</span>
+        <span>Data sources</span>
+        <ol className="map-sources">
+          <li id="source-1">
+            Shoreline positions and rates of change — Digital Earth Pacific, Coastlines (
+            <a
+              href="https://pacificdata.org/data/dataset/dep_ls_coastlines"
+              target="_blank"
+              rel="noreferrer"
+            >
+              pacificdata.org
+            </a>
+            ).
+          </li>
+          <li id="source-2">
+            Mangrove extent — Digital Earth Pacific, Annual Mangrove Mapping (
+            <a href="https://pacificdata.org/data/dataset/dep_s2_ammi" target="_blank" rel="noreferrer">
+              pacificdata.org
+            </a>
+            ).
+          </li>
+          <li id="source-3">
+            Sea-surface temperature anomalies — Pacific Data Hub, SPC Climate Change (
+            <a
+              href="https://stats.pacificdata.org/vis?lc=en&df[ds]=SPC2&df[id]=DF_CLIMATE_CHANGE&df[ag]=SPC&df[vs]=1.0&av=true&dq=A.SST_ANOM.&pd=,&to[TIME_PERIOD]=false&vw=tb"
+              target="_blank"
+              rel="noreferrer"
+            >
+              stats.pacificdata.org
+            </a>
+            ).
+          </li>
+          <li id="source-4">
+            Sea-level rise — Pacific Data Hub, SPC Climate Change (
+            <a
+              href="https://stats.pacificdata.org/vis?lc=en&df[ds]=SPC2&df[id]=DF_CLIMATE_CHANGE&df[ag]=SPC&df[vs]=1.0&av=true&dq=A.SEA_LVL.&pd=,&to[TIME_PERIOD]=false"
+              target="_blank"
+              rel="noreferrer"
+            >
+              stats.pacificdata.org
+            </a>
+            ).
+          </li>
+          <li id="source-5">
+            Meteorological monitoring network — Pacific Data Hub, SPC Climate Change (
+            <a
+              href="https://stats.pacificdata.org/vis?lc=en&df[ds]=SPC2&df[id]=DF_CLIMATE_CHANGE&df[ag]=SPC&df[vs]=1.0&av=true&dq=A.METEO_MONITOR_NET.&pd=,&to[TIME_PERIOD]=false"
+              target="_blank"
+              rel="noreferrer"
+            >
+              stats.pacificdata.org
+            </a>
+            ).
+          </li>
+        </ol>
       </div>
       <svg
         className="bar-heatmap-connector"

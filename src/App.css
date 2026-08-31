@@ -131,7 +131,30 @@
 .map-outer {
   position: relative;
   width: 100%;
-  height: 232.0054cqw;
+  height: 240cqw;
+}
+
+/* Small superscript link next to a chart title, pointing at its matching
+   entry in the sources list at the bottom of the section. */
+.source-ref {
+  font-size: 0.6em;
+  vertical-align: super;
+  margin-left: 0.2em;
+  color: #003153;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.source-ref:hover {
+  text-decoration: underline;
+}
+
+/* On the large section headers the 0.6em ref reads too big - shrink it. */
+.map-intro-titles .source-ref,
+.heatmap-title .source-ref,
+.heatmap-title-2 .source-ref,
+.weather-station-title .source-ref {
+  font-size: 0.38em;
 }
 
 /* Hexagon, left side unchanged from before (collinear top diagonal
@@ -981,9 +1004,22 @@
   top: 227.0575cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
-  height: 1.0417cqw;
   font-size: 0.8cqw;
   color: #212428;
+  line-height: 1.5;
+}
+
+.map-sources {
+  margin: 0.6cqw 0 0;
+  padding-left: 1.6em;
+}
+
+.map-sources li {
+  margin-bottom: 0.3em;
+}
+
+.map-sources a {
+  color: #003153;
 }
 
 /* Down / 45deg / across connector lines from each left-chart bar to its

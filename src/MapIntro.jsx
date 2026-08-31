@@ -10,7 +10,12 @@ export default function MapIntro() {
   return (
     <div className="map-intro">
       <div className="map-intro-titles">
-        <h3>Cartography of the Pacific Ocean’s Island Nations.</h3>
+        <h3>
+          Cartography of the Pacific Ocean’s Island Nations.
+          <a className="source-ref" href="#source-1">
+            1
+          </a>
+        </h3>
       </div>
       <div className="map-intro-text">
         <p>
