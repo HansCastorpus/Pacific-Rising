@@ -13,7 +13,7 @@ import { SEA_LEVEL_CSV_URL, SEA_TEMPERATURE_CSV_URL, parseAnomalyCsv } from './a
 const protocol = new Protocol()
 addProtocol('pmtiles', protocol.tile)
 
-const PMTILES_URL = `pmtiles://${window.location.origin}/tiles/coastlines.pmtiles`
+const PMTILES_URL = `pmtiles://${window.location.origin}${import.meta.env.BASE_URL}tiles/coastlines.pmtiles`
 const OPENFREEMAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/dark'
 
 const OCEAN_COLOR = '#003153'
