@@ -189,9 +189,11 @@ const HEAT_INTENSITY = ['interpolate', ['linear'], ['zoom'], 8, 1, 14, 3]
 
 // The haze reads fine zoomed out but gets visually noisy up close (individual
 // point kernels become distinguishable), so it fades out over this zoom range
-// as the perpendicular tick marks (below) fade in.
-const ZOOM_TRANSITION_START = 9
-const ZOOM_TRANSITION_END = 11
+// as the perpendicular tick marks (below) fade in. The range is 11-12 because
+// the rates_of_change tiles only carry data from zoom 11 up (kept small for
+// hosting) - there are no tick points to cross-fade before then.
+const ZOOM_TRANSITION_START = 11
+const ZOOM_TRANSITION_END = 11.4
 const HEAT_OPACITY = ['interpolate', ['linear'], ['zoom'], ZOOM_TRANSITION_START, 0.75, ZOOM_TRANSITION_END, 0]
 
 // Zoomed-out haze sources from hotspots_zoom_2 rather than raw rates_of_change
@@ -228,8 +230,8 @@ function heatLayer(id, sign, colorRamp) {
 // separate icon sets and zoom-gated layers (icon-size can't do this alone,
 // since it would scale length too).
 const TICK_WIDTH_TIERS = [
-  { tag: 'w5', px: 3, minzoom: ZOOM_TRANSITION_START, maxzoom: 11 },
-  { tag: 'w4', px: 1, minzoom: 11, maxzoom: 13 },
+  { tag: 'w5', px: 3, minzoom: ZOOM_TRANSITION_START, maxzoom: 12 },
+  { tag: 'w4', px: 1, minzoom: 12, maxzoom: 13 },
   { tag: 'w3', px: 2, minzoom: 13, maxzoom: 15 },
   { tag: 'w2', px: 2, minzoom: 15, maxzoom: 17 },
   { tag: 'w1', px: 2, minzoom: 17 },
@@ -921,9 +923,13 @@ const WAVE_PATH_NEGATIVE = 'M0,10 Q25,7.5 50,10 Q75,12.5 100,10 L100,0 L0,0 Z'
 // needs recalculating by hand. The sea-level bar (x=59.13) now targets the
 // second heatmap slot and the temperature bar (x=149.37) targets the
 // first, since the two heatmaps' on-screen positions were swapped.
-const MAP_OUTER_VIEWBOX_HEIGHT = 4454.504
-const BAR_TO_HEATMAP_LINE_1 = 'M 59.13 1019.00 L 59.13 2538.63 L 219.50 2699.00 L 269.50 2699.00'
-const BAR_TO_HEATMAP_LINE_2 = 'M 149.37 1019.00 L 149.37 1801.87 L 219.50 1872.00 L 269.50 1872.00'
+// viewBox height = .map-outer's height in the 1920pt frame, so path coords
+// map 1:1. .map-outer is calc(240cqw + --tl-note-h); with --tl-note-h = 16cqw
+// that's 256cqw -> 256 * 19.2 = 4915.2. Points below the timeline are shifted
+// down 16cqw (= 307.2pt) to follow .timeline-note; points above it are not.
+const MAP_OUTER_VIEWBOX_HEIGHT = 4915.2
+const BAR_TO_HEATMAP_LINE_1 = 'M 59.13 1019.00 L 59.13 2845.83 L 219.50 3006.20 L 269.50 3006.20'
+const BAR_TO_HEATMAP_LINE_2 = 'M 149.37 1019.00 L 149.37 2109.07 L 219.50 2179.20 L 269.50 2179.20'
 
 // Same line style, mirrored: from the weather-station dot chart's (right
 // of the map) bottom-middle down to the weather-station chart section's

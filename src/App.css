@@ -129,9 +129,57 @@
 }
 
 .map-outer {
+  /* Vertical space reserved for .timeline-note (the mangrove blurb below
+     the timeline). Everything below the timeline is shifted down by this,
+     and the connector SVG viewBox height tracks it - see
+     MAP_OUTER_VIEWBOX_HEIGHT in MapSection.jsx. */
+  --tl-note-h: 16cqw;
   position: relative;
   width: 100%;
-  height: 240cqw;
+  height: calc(240cqw + var(--tl-note-h));
+}
+
+/* Blurb below the timeline, styled like the hero copy (two justified
+   columns, light weight), as wide as the timeline. */
+.timeline-note {
+  position: absolute;
+  top: 74.9219cqw;
+  left: 14.0365cqw;
+  width: 77.0833cqw;
+  height: var(--tl-note-h);
+  box-sizing: border-box;
+  padding: 1.5625cqw;
+  font-size: 1.25cqw;
+  font-weight: 300;
+  column-count: 2;
+  column-gap: 1.0417cqw;
+}
+
+.timeline-note p {
+  margin: 0 0 1em;
+  text-align: justify;
+  text-align-last: left;
+}
+
+/* Shift every section below the timeline down by --tl-note-h to clear
+   .timeline-note. margin-top offsets an absolutely-positioned element the
+   same as adding to `top`, so this is one rule instead of 15. */
+.map-section-gap,
+.heatmap-title,
+.heatmap-chart-container,
+.heatmap-side-text,
+.timeline-container-2,
+.heatmap-title-2,
+.heatmap-chart-container-2,
+.heatmap-side-text-2,
+.timeline-container-3,
+.weather-station-title,
+.weather-station-text,
+.weather-station-chart,
+.timeline-container-4,
+.map-section-separator,
+.map-section-copyright {
+  margin-top: var(--tl-note-h);
 }
 
 /* Small superscript link next to a chart title, pointing at its matching
@@ -1170,29 +1218,45 @@
   gap: 0.5208cqw;
 }
 
-/* Same size as the info-card hotspot circles, pushed to the right edge of
-   each capital text line (margin-left: auto), one row per line so the two
-   circles stack on top of each other and line up vertically. */
+/* Round "zoom to" buttons at the right edge of each capital text line
+   (margin-left: auto), one per row so they stack and line up vertically.
+   Styled as icon buttons: dark rim, a magnifier glyph, and a pressed
+   state. --btn-fill is the only thing that differs between the two (set
+   per row below). */
 .info-box-capitals-circle {
+  --btn-fill: #2a6f97;
+  position: relative;
   flex-shrink: 0;
   margin-left: auto;
   width: 1.3021cqw;
   height: 1.3021cqw;
   border-radius: 50%;
-  background: #2a6f97;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  background: var(--btn-fill);
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: transform 0.12s ease;
+}
+
+.info-box-capitals-circle::before {
+  content: '';
+  position: absolute;
+  inset: 24%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='6'/%3E%3Cline x1='14.5' y1='14.5' x2='21' y2='21'/%3E%3C/svg%3E")
+    center / contain no-repeat;
 }
 
 .info-box-capitals-circle:hover {
-  transform: scale(1.18);
-  box-shadow: 0 0 0 0.1563cqw rgba(0, 49, 83, 0.3);
+  transform: scale(1.12);
 }
 
-/* First row is "Capital island" - Prussian blue; the "Capital city" one
-   below it is a lighter Prussian blue. */
+.info-box-capitals-circle:active {
+  transform: scale(0.94);
+}
+
+/* First row is "Capital island" - deeper Prussian blue; "Capital city"
+   below it keeps the lighter default. */
 .info-box-capitals-row:first-child .info-box-capitals-circle {
-  background: #003153;
+  --btn-fill: #003153;
 }
 
 .info-box-stats {
@@ -1259,6 +1323,7 @@
 }
 
 .hotspot-circle {
+  position: relative;
   width: 1.3021cqw;
   height: 1.3021cqw;
   border-radius: 50%;
@@ -1267,6 +1332,16 @@
   box-sizing: border-box;
   flex-shrink: 0;
   transition: background 0.12s ease;
+}
+
+/* Dark magnifier glyph inside the circle - signals "click to zoom the map
+   to this hotspot". */
+.hotspot-circle::before {
+  content: '';
+  position: absolute;
+  inset: 24%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23212428' stroke-width='2.6' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='6'/%3E%3Cline x1='14.5' y1='14.5' x2='21' y2='21'/%3E%3C/svg%3E")
+    center / contain no-repeat;
 }
 
 /* "Spots of interest" (everything that isn't a Negative/at-risk hotspot) -
