@@ -129,33 +129,69 @@
 }
 
 .map-outer {
-  /* Vertical space reserved for .timeline-note (the mangrove blurb below
-     the timeline). Everything below the timeline is shifted down by this,
-     and the connector SVG viewBox height tracks it - see
-     MAP_OUTER_VIEWBOX_HEIGHT in MapSection.jsx. */
+  /* --tl-note-h: space reserved for .timeline-note (the mangrove blurb
+     below the timeline); every section below the timeline shifts down by
+     it, and the connector SVG viewBox tracks it - see
+     MAP_OUTER_VIEWBOX_HEIGHT in MapSection.jsx.
+     --conclusion-h: space reserved for .map-conclusion, above the sources
+     line; only the separator + sources shift by this (it's below every
+     connector, so no JS change needed). */
   --tl-note-h: 16cqw;
+  --conclusion-h: 24cqw;
+  /* --meteo-tighten: amount the meteo chart (and everything below it) is
+     pulled UP once the meteo text box is snugged to ~0.5cqw gaps above
+     and below. */
+  --meteo-tighten: 4.5937cqw;
   position: relative;
   width: 100%;
-  height: calc(240cqw + var(--tl-note-h));
+  height: calc(240cqw + var(--tl-note-h) + var(--conclusion-h) - var(--meteo-tighten));
 }
 
-/* Blurb below the timeline, styled like the hero copy (two justified
-   columns, light weight), as wide as the timeline. */
-.timeline-note {
+/* Blurbs styled like the hero copy (two justified columns, light weight),
+   as wide as the timeline: the mangrove note below the timeline and the
+   conclusion above the sources line. */
+.timeline-note,
+.map-conclusion {
   position: absolute;
-  top: 74.9219cqw;
   left: 14.0365cqw;
   width: 77.0833cqw;
-  height: var(--tl-note-h);
   box-sizing: border-box;
   padding: 1.5625cqw;
   font-size: 1.25cqw;
   font-weight: 300;
+}
+
+.timeline-note {
+  top: 74.9219cqw;
+  height: var(--tl-note-h);
+}
+
+.map-conclusion {
+  top: calc(223.0471cqw + var(--tl-note-h) - var(--meteo-tighten));
+  height: var(--conclusion-h);
+}
+
+.timeline-note-title {
+  margin: 0 0 0.5cqw;
+  font-size: 1.5625cqw;
+  font-weight: 500;
+}
+
+/* Conclusion heading matches the chart/section titles. */
+.map-conclusion-title {
+  margin: 0 0 0.5cqw;
+  font-size: 2.6042cqw;
+  font-weight: 500;
+}
+
+.timeline-note-body,
+.map-conclusion-body {
   column-count: 2;
   column-gap: 1.0417cqw;
 }
 
-.timeline-note p {
+.timeline-note p,
+.map-conclusion p {
   margin: 0 0 1em;
   text-align: justify;
   text-align-last: left;
@@ -180,6 +216,18 @@
 .map-section-separator,
 .map-section-copyright {
   margin-top: var(--tl-note-h);
+}
+
+/* The meteo chart and everything under it are pulled up by --meteo-tighten. */
+.timeline-container-4 {
+  margin-top: calc(var(--tl-note-h) - var(--meteo-tighten));
+}
+
+/* Separator + sources sit below .map-conclusion too, so they take the
+   extra shift on top of --tl-note-h (minus the meteo tighten). */
+.map-section-separator,
+.map-section-copyright {
+  margin-top: calc(var(--tl-note-h) + var(--conclusion-h) - var(--meteo-tighten));
 }
 
 /* Small superscript link next to a chart title, pointing at its matching
@@ -1062,21 +1110,27 @@
 
 .weather-station-text {
   position: absolute;
-  top: 168.8804cqw;
+  /* 0.5cqw below the title (title bottom 168.8804), text hugs the top;
+     the chart is pulled up (--meteo-tighten) to sit 0.5cqw below this. */
+  top: 169.3804cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
-  height: 11.0938cqw;
+  height: 5.5cqw;
   background: #ececec;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 1.5625cqw;
   color: #212428;
+  font-size: 1.25cqw;
+  font-weight: 300;
+  text-align: left;
   box-sizing: border-box;
 }
 
 .weather-station-chart {
   position: absolute;
-  top: 179.9741cqw;
+  top: calc(179.9741cqw - var(--meteo-tighten));
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 29.5313cqw;
@@ -1601,10 +1655,13 @@
 }
 
 /* Match the section-header type to the other titles (nation buttons, map
-   intro): 2.6042cqw, weight 500. */
+   intro): 2.6042cqw, weight 500, left-aligned with the same 1.5625cqw
+   inset as the conclusion title. */
 .heatmap-title,
 .heatmap-title-2,
 .weather-station-title {
+  justify-content: flex-start;
+  padding-left: 1.5625cqw;
   font-size: 2.6042cqw;
   font-weight: 500;
 }

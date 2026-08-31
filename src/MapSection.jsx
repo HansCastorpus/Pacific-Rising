@@ -924,10 +924,12 @@ const WAVE_PATH_NEGATIVE = 'M0,10 Q25,7.5 50,10 Q75,12.5 100,10 L100,0 L0,0 Z'
 // second heatmap slot and the temperature bar (x=149.37) targets the
 // first, since the two heatmaps' on-screen positions were swapped.
 // viewBox height = .map-outer's height in the 1920pt frame, so path coords
-// map 1:1. .map-outer is calc(240cqw + --tl-note-h); with --tl-note-h = 16cqw
-// that's 256cqw -> 256 * 19.2 = 4915.2. Points below the timeline are shifted
-// down 16cqw (= 307.2pt) to follow .timeline-note; points above it are not.
-const MAP_OUTER_VIEWBOX_HEIGHT = 4915.2
+// map 1:1. .map-outer is calc(240 + --tl-note-h + --conclusion-h -
+// --meteo-tighten)cqw = (240 + 16 + 24 - 4.5937)cqw = 275.4063cqw ->
+// * 19.2 = 5287.8. Points below the timeline are shifted down 16cqw
+// (307.2pt) for .timeline-note; the weather->station connector's target
+// end is then pulled up 4.5937cqw (88.2pt) with the meteo chart.
+const MAP_OUTER_VIEWBOX_HEIGHT = 5287.8
 const BAR_TO_HEATMAP_LINE_1 = 'M 59.13 1019.00 L 59.13 2845.83 L 219.50 3006.20 L 269.50 3006.20'
 const BAR_TO_HEATMAP_LINE_2 = 'M 149.37 1019.00 L 149.37 2109.07 L 219.50 2179.20 L 269.50 2179.20'
 
@@ -936,7 +938,18 @@ const BAR_TO_HEATMAP_LINE_2 = 'M 149.37 1019.00 L 149.37 2109.07 L 219.50 2179.2
 // (further below the heatmaps) right-border middle - so the diagonal
 // bends down-left instead of down-right, and the final 50px run touches
 // the target's right border instead of its left.
-const WEATHER_CHART_TO_STATION_CHART_LINE = 'M 1773.00 1099.50 L 1773.00 3421.50 L 1455.50 3739.00 L 1405.50 3739.00'
+const WEATHER_CHART_TO_STATION_CHART_LINE = 'M 1773.00 1099.50 L 1773.00 3640.50 L 1455.50 3958.00 L 1405.50 3958.00'
+
+// Annotation pointer: from just right of the "Sidenote on mangroves" title
+// (~x627, y1486), a short run right, a 45-degree elbow up-right, then a
+// fixed 50pt vertical run up to just under the mangrove timeline toggle
+// circle (center x724.5, bottom ~y1358), capped with an upward arrowhead
+// matching the timeline connectors' (6pt point / 8pt base). Same 1920pt
+// frame as the lines above; button geometry = .timeline-container (left
+// 269.5) + .timeline-text (300) + .timeline-toggle-circle-2 (left 125,
+// size 60), .timeline-container top 1173.5 + circle top 125.
+const NOTE_TO_MANGROVE_LINE = 'M 627 1486 L 679.5 1486 L 724.5 1441 L 724.5 1373'
+const NOTE_TO_MANGROVE_ARROW = 'M 724.5 1367 L 720.5 1373 L 728.5 1373 Z'
 
 // Map section: an info card (pentagon, bottom-right corner diagonally cut)
 // and nation-select column on top, then the map shape below - anchored at
@@ -1544,6 +1557,24 @@ export default function MapSection() {
           </div>
         </div>
       </div>
+      <div className="timeline-note">
+        <h3 className="timeline-note-title">Sidenote on mangroves</h3>
+        <div className="timeline-note-body">
+          <p>
+            Mangroves are trees and shrubs that grow along tropical and subtropical coastlines, where their
+            roots are regularly exposed to seawater and tides. Their dense root systems help stabilize
+            shorelines by holding sediment in place and reducing erosion. They can also slow waves and lessen
+            the impact of storm surges, helping to protect coastal communities from flooding. As sea levels
+            rise, mangroves provide a natural barrier between the ocean and the land, making them an important
+            part of coastal protection in the Pacific.
+          </p>
+          <p>
+            As an addition to the main project, a small dataset allows users to explore mangrove coverage
+            across the Pacific and better understand the role these ecosystems can play in protecting
+            vulnerable coastlines, in relation to the evolution of shorelines.
+          </p>
+        </div>
+      </div>
       <div className="map-section-gap" />
       <div className="heatmap-title">
         <span>
@@ -1703,6 +1734,25 @@ export default function MapSection() {
           </div>
         </div>
       </div>
+      <div className="map-conclusion">
+        <h3 className="map-conclusion-title">Conclusion</h3>
+        <div className="map-conclusion-body">
+          <p>
+            What we see in this data is that the situation is still not improving. Programs are being put in
+            place, but they are adapting to the situation rather than addressing its underlying causes. This
+            is not a criticism. Having interned at the Global Fund for Coral Reefs, I saw firsthand how
+            difficult it is to tackle a problem that stems from a deeply rooted global responsibility. Amazing
+            people are doing amazing things to alleviate the environmental issues that plague their local
+            communities.
+          </p>
+          <p>
+            But what needs to be done requires action on a vastly greater scale. We need to change our ways
+            sooner rather than later if we are to address this problem and help protect these nations. The
+            technologies we all rely on today also contribute to this damage, forcing us to confront a
+            difficult balance between the benefits of our work and the environmental cost of producing them.
+          </p>
+        </div>
+      </div>
       <div className="map-section-separator" />
       <div className="map-section-copyright">
         <span>Data sources</span>
@@ -1768,6 +1818,8 @@ export default function MapSection() {
         <path d={BAR_TO_HEATMAP_LINE_1} fill="none" stroke="#000" strokeWidth="2" />
         <path d={BAR_TO_HEATMAP_LINE_2} fill="none" stroke="#000" strokeWidth="2" />
         <path d={WEATHER_CHART_TO_STATION_CHART_LINE} fill="none" stroke="#000" strokeWidth="2" />
+        <path d={NOTE_TO_MANGROVE_LINE} fill="none" stroke="#000" strokeWidth="2" />
+        <path d={NOTE_TO_MANGROVE_ARROW} fill="#000" />
       </svg>
     </div>
   )
