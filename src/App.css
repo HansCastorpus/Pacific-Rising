@@ -1452,14 +1452,14 @@
   height: 5.2083cqw;
   clip-path: polygon(0% 0%, 80% 0%, 100% 20%, 100% 100%, 0% 100%);
   background: #ccc;
-  border: 2px solid #8f9385;
+  border: 2px solid #000;
   padding: 0.3646cqw 0.3646cqw 0.3646cqw 0.4688cqw;
   box-sizing: border-box;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
   cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 
 /* The clip-path's diagonal cut (from 80%,0 to 100%,20%) can't take a CSS
@@ -1476,25 +1476,20 @@
   top: 0.4712cqw;
   width: 1.72394cqw;
   height: 4px;
-  background: #8f9385;
+  background: #000;
   transform: translate(-50%, -50%) rotate(41.472deg);
 }
 
-/* Hover: brighten the fill, darken the border. */
+/* Hover / active change only the fill - the border stays the shared #000.
+   Inset shadow (clipped along with the fill, unlike a drop shadow). */
 .nation-button:hover {
   background: #dcdcd6;
-  border-color: #212428;
+  box-shadow: inset 0 0 0.5cqw rgba(0, 0, 0, 0.4);
 }
 
 /* Active: the button of the currently-selected nation. */
 .nation-button.active {
   background: #8a9bb0;
-  border-color: #212428;
-}
-
-.nation-button:hover::after,
-.nation-button.active::after {
-  background: #212428;
 }
 
 /* font-size here is the starting/max size - FitText shrinks the actual
