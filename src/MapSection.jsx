@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Map as MapLibreMap, Popup, AttributionControl, addProtocol } from 'maplibre-gl'
+import { Map as MapLibreMap, Popup, AttributionControl, addProtocol, setWorkerUrl } from 'maplibre-gl'
 import { Protocol } from 'pmtiles'
 import { csvParseRows } from 'd3-dsv'
 import 'maplibre-gl/dist/maplibre-gl.css'
@@ -12,6 +12,14 @@ import { SEA_LEVEL_CSV_URL, SEA_TEMPERATURE_CSV_URL, parseAnomalyCsv } from './a
 
 const protocol = new Protocol()
 addProtocol('pmtiles', protocol.tile)
+
+// maplibre-gl 6.x resolves its web worker from a file sitting next to its own
+// module (via import.meta.url). Vite inlines maplibre into the app bundle and
+// never emits that worker file, so in a production build the worker request
+// hangs and no tiles are ever parsed. Point it at a vendored copy in public/
+// instead. Re-copy public/maplibre-gl-worker.mjs + maplibre-gl-shared.mjs from
+// node_modules/maplibre-gl/dist/ whenever maplibre-gl is upgraded.
+setWorkerUrl(`${import.meta.env.BASE_URL}maplibre-gl-worker.mjs`)
 
 const PMTILES_URL = `pmtiles://${window.location.origin}${import.meta.env.BASE_URL}tiles/coastlines.pmtiles`
 const OPENFREEMAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/dark'
