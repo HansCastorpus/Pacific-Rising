@@ -1,7 +1,9 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 41.6667cqw;
+  /* Raised from 41.6667cqw so the taller hero copy clears the banner with
+     roughly the same gap it had before. */
+  height: 50cqw;
 }
 
 .hero-eyebrow {
@@ -51,7 +53,7 @@
   top: 25cqw;
   left: 50%;
   transform: translateX(-50%);
-  width: 65.1042cqw;
+  width: 71cqw;
   margin-top: -2px;
   font-size: 1.25cqw;
   font-weight: 300;
@@ -60,7 +62,7 @@
   padding: 1.0417cqw;
   box-sizing: border-box;
   z-index: 1;
-  background: #a8ada1;
+  background: #cccec8;
 }
 
 .hero-textbox p {
@@ -72,26 +74,31 @@
 .banner-placeholder {
   width: 100%;
   height: 24.4792cqw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: repeating-linear-gradient(45deg, #ccc, #ccc 10px, #ddd 10px, #ddd 20px);
-  color: #555;
-  font-size: 1.5cqw;
+  overflow: hidden;
   box-sizing: border-box;
+}
+
+.banner-placeholder img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Shift the visible crop up 20% from centre (50% -> 70%). */
+  object-position: center 70%;
 }
 
 .map-intro {
   width: 100%;
-  height: 16.5625cqw;
+  /* min-height (not a fixed height) so the container grows to fit the
+     intro copy instead of clipping it. */
+  min-height: 16.5625cqw;
   display: flex;
   align-items: flex-start;
   gap: 0.9375cqw;
   padding: 1.5625cqw;
   background: #e8e8e8;
-  color: #555;
+  color: #212428;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 /* Column 1: titles, own 30px inner padding. Width assumed ~1/3 of the box
@@ -163,12 +170,12 @@
 
 .left-chart-bar-title {
   position: absolute;
-  top: 0;
+  top: 4px;
   left: calc(100% + 0.3646cqw);
   writing-mode: vertical-rl;
-  font-size: 0.75cqw;
+  font-size: 1.0417cqw;
   white-space: nowrap;
-  color: #444;
+  color: #212428;
 }
 
 /* Diverging single-year bar: a zero line splits the bar in half, the top
@@ -180,7 +187,7 @@
   right: 0.3646cqw;
   font-size: 0.9375cqw;
   font-weight: 500;
-  color: #2a2a2a;
+  color: #212428;
   z-index: 2;
 }
 
@@ -206,7 +213,7 @@
   right: 0;
   transform: translateY(-50%);
   font-size: 0.625cqw;
-  color: #444;
+  color: #212428;
   white-space: nowrap;
 }
 
@@ -333,7 +340,7 @@
   width: 2.6042cqw;
   height: 36.1458cqw;
   background: #cfd8b8;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -352,12 +359,12 @@
 /* Same vertical-title treatment as the left-chart bars. */
 .weather-chart-title {
   position: absolute;
-  top: 0;
+  top: 4px;
   left: calc(100% + 0.3646cqw);
   writing-mode: vertical-rl;
-  font-size: 0.75cqw;
+  font-size: 1.0417cqw;
   white-space: nowrap;
-  color: #444;
+  color: #212428;
 }
 
 /* Below the map, spanning its bottom width (1478.5pt). Left side is plain
@@ -370,7 +377,7 @@
   width: 77.0573cqw;
   height: 3.9063cqw;
   background: #d8c8b8;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -408,7 +415,7 @@
   height: 13.8021cqw;
   background: #c8c8d8;
   display: flex;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -532,13 +539,32 @@
   background: #000;
 }
 
+/* The track is only 2px tall - this invisible ::before gives it a ~24px
+   click target so a click anywhere along the timeline jumps the handle. */
+.timeline-track-1,
+.timeline-track-2 {
+  cursor: pointer;
+}
+
+.timeline-track-1::before,
+.timeline-track-2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -0.625cqw;
+  bottom: -0.625cqw;
+}
+
+/* Positioned by its center (transform) directly on the track endpoint, so
+   the size can change without re-deriving the left/top offsets. */
 .timeline-end-circle {
   position: absolute;
-  top: 3.125cqw;
-  width: 1.0417cqw;
-  height: 1.0417cqw;
+  width: 1.5625cqw;
+  height: 1.5625cqw;
   border-radius: 50%;
   background: #000;
+  transform: translate(-50%, -50%);
 }
 
 /* Small tick crossing the track at each year, centered on the track's
@@ -557,11 +583,13 @@
 }
 
 .timeline-end-circle-1-start {
-  left: 13.2813cqw;
+  top: 3.6458cqw;
+  left: 13.8021cqw;
 }
 
 .timeline-end-circle-1-end {
-  left: 58.9583cqw;
+  top: 3.6458cqw;
+  left: 59.4792cqw;
 }
 
 .timeline-date {
@@ -569,7 +597,7 @@
   top: 4.6875cqw;
   transform: translateX(-50%);
   font-size: 0.75cqw;
-  color: #444;
+  color: #212428;
 }
 
 .timeline-date-1-start {
@@ -595,7 +623,9 @@
   position: absolute;
   top: 3.6458cqw;
   left: 9.6354cqw;
-  width: 3.125cqw;
+  /* 5px shorter than the nominal 3.125cqw so the line stops exactly at the
+     arrowhead's base (which was nudged 5px left). */
+  width: calc(3.125cqw - 5px);
   height: 1px;
   background: #000;
   transform: translateY(-50%);
@@ -619,7 +649,7 @@
    2017-2023 mangrove range. */
 .timeline-connector-2 {
   top: 8.0729cqw;
-  width: 37.3828cqw;
+  width: calc(37.3828cqw - 5px);
 }
 
 /* Mangrove data only covers 2017-2023 (vs shoreline's full 1999-2023), so
@@ -636,13 +666,13 @@
 }
 
 .timeline-end-circle-2-start {
-  top: 7.5521cqw;
-  left: 47.5391cqw;
+  top: 8.0729cqw;
+  left: 48.0599cqw;
 }
 
 .timeline-end-circle-2-end {
-  top: 7.5521cqw;
-  left: 58.9583cqw;
+  top: 8.0729cqw;
+  left: 59.4792cqw;
 }
 
 .timeline-date-2-start {
@@ -676,7 +706,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -691,7 +721,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -706,7 +736,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -788,7 +818,7 @@
   position: relative;
   margin-top: 0.9896cqw;
   font-size: 0.75cqw;
-  color: #444;
+  color: #212428;
 }
 
 .mini-timeline-date-start {
@@ -827,7 +857,7 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: 2.0833cqw;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -841,7 +871,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -856,7 +886,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -870,7 +900,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -885,7 +915,7 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: 2.0833cqw;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -902,7 +932,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -916,7 +946,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -930,7 +960,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -953,7 +983,7 @@
   width: 59.1667cqw;
   height: 1.0417cqw;
   font-size: 0.8cqw;
-  color: #555;
+  color: #212428;
 }
 
 /* Down / 45deg / across connector lines from each left-chart bar to its
@@ -978,7 +1008,7 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: 2.0833cqw;
-  color: #444;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -1006,7 +1036,7 @@
   border-bottom: 2px solid #000;
   display: flex;
   flex-direction: column;
-  color: #555;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -1028,6 +1058,7 @@
   text-align: left;
   font-size: 1.9792cqw;
   font-weight: 500;
+  border-bottom: none;
 }
 
 .info-box-capitals {
@@ -1040,6 +1071,7 @@
   font-size: 1.0417cqw;
   line-height: 1.3;
   font-weight: 500;
+  border-bottom: none;
 }
 
 .info-box-capitals-row {
@@ -1049,16 +1081,29 @@
   gap: 0.5208cqw;
 }
 
-/* Same size as the info-card hotspot circles, 10px right of each capital
-   text line (via the flex row's own gap), one row per line so the two
-   circles stack on top of each other. */
+/* Same size as the info-card hotspot circles, pushed to the right edge of
+   each capital text line (margin-left: auto), one row per line so the two
+   circles stack on top of each other and line up vertically. */
 .info-box-capitals-circle {
   flex-shrink: 0;
+  margin-left: auto;
   width: 1.3021cqw;
   height: 1.3021cqw;
   border-radius: 50%;
-  background: #f5f0dc;
+  background: #2a6f97;
   cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.info-box-capitals-circle:hover {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 0.1563cqw rgba(0, 49, 83, 0.3);
+}
+
+/* First row is "Capital island" - Prussian blue; the "Capital city" one
+   below it is a lighter Prussian blue. */
+.info-box-capitals-row:first-child .info-box-capitals-circle {
+  background: #003153;
 }
 
 .info-box-stats {
@@ -1095,7 +1140,28 @@
   align-items: center;
   gap: 0.5208cqw;
   padding-left: 0.5208cqw;
+  border-radius: 0.2604cqw;
   cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+/* Hover: faint row tint + a partly-filled circle. */
+.hotspot-row:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.hotspot-row:hover .hotspot-circle {
+  background: rgba(255, 59, 48, 0.25);
+}
+
+/* Active: the row of the currently-selected hotspot - stronger tint and a
+   solid red circle. */
+.hotspot-row.active {
+  background: rgba(255, 59, 48, 0.14);
+}
+
+.hotspot-row.active .hotspot-circle {
+  background: #ff3b30;
 }
 
 .hotspot-name {
@@ -1107,13 +1173,17 @@
   width: 1.3021cqw;
   height: 1.3021cqw;
   border-radius: 50%;
-  background: #ff3b30;
+  background: transparent;
+  border: 2px solid #ff3b30;
+  box-sizing: border-box;
   flex-shrink: 0;
+  transition: background 0.12s ease;
 }
 
-/* "Spots of interest" (everything that isn't a Negative/at-risk hotspot). */
+/* "Spots of interest" (everything that isn't a Negative/at-risk hotspot) -
+   same empty red-outlined circle as the rest now. */
 .hotspot-circle-interest {
-  background: #4d996f;
+  background: transparent;
 }
 
 .nation-column {
@@ -1126,7 +1196,7 @@
   width: 100%;
   height: 16.1458cqw;
   background: #e0e0e0;
-  color: #555;
+  color: #212428;
   box-sizing: border-box;
 }
 
@@ -1159,16 +1229,54 @@
 }
 
 .nation-button {
+  position: relative;
   width: 5.8996cqw;
   height: 5.2083cqw;
   clip-path: polygon(0% 0%, 80% 0%, 100% 20%, 100% 100%, 0% 100%);
   background: #ccc;
-  border: none;
+  border: 2px solid #8f9385;
   padding: 0.3646cqw 0.3646cqw 0.3646cqw 0.4688cqw;
   box-sizing: border-box;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* The clip-path's diagonal cut (from 80%,0 to 100%,20%) can't take a CSS
+   border, so trace it with a rotated bar laid along that segment. Drawn
+   2px thick and centred on the cut so the clip trims it back to ~1px,
+   matching the straight borders (same trick as .map-shape-diagonals).
+   The bar is extended ~0.15cqw past the top-left end (keeping the
+   bottom-right end fixed) so it meets the top border cleanly. Drawn 4px
+   so the clip trims it back to the ~2px straight border weight. */
+.nation-button::after {
+  content: '';
+  position: absolute;
+  left: 5.25342cqw;
+  top: 0.4712cqw;
+  width: 1.72394cqw;
+  height: 4px;
+  background: #8f9385;
+  transform: translate(-50%, -50%) rotate(41.472deg);
+}
+
+/* Hover: brighten the fill, darken the border. */
+.nation-button:hover {
+  background: #dcdcd6;
+  border-color: #212428;
+}
+
+/* Active: the button of the currently-selected nation. */
+.nation-button.active {
+  background: #8a9bb0;
+  border-color: #212428;
+}
+
+.nation-button:hover::after,
+.nation-button.active::after {
+  background: #212428;
 }
 
 /* font-size here is the starting/max size - FitText shrinks the actual
@@ -1190,7 +1298,7 @@
   display: flex;
   align-items: stretch;
   gap: 0.5208cqw;
-  color: #555;
+  color: #212428;
   box-sizing: border-box;
   font-size: 0.8cqw;
   overflow: hidden;
@@ -1223,7 +1331,7 @@
 
 .hotspot-info-name a {
   display: block;
-  color: #555;
+  color: #212428;
   font-size: 0.8333cqw;
   line-height: 1;
   flex-shrink: 0;
@@ -1277,13 +1385,13 @@
   font-size: 10px;
   text-anchor: end;
   dominant-baseline: middle;
-  fill: #2a2a2a;
+  fill: #212428;
 }
 
 .heatmap-col-label {
   font-size: 10px;
   text-anchor: end;
-  fill: #2a2a2a;
+  fill: #212428;
 }
 
 /* Uniform background across every placeholder section container on the
@@ -1310,7 +1418,31 @@
 .weather-station-text,
 .weather-station-chart,
 .timeline-container-4 {
+  background: #cccec8;
+}
+
+/* Chart containers (the ones flanking the map, the two heatmaps and the
+   meteo chart), plus the map-intro text block, the legend and the
+   hotspot-info box, get a darker fill than the plain section containers
+   above. */
+.map-intro,
+.left-chart,
+.weather-chart,
+.heatmap-chart-container,
+.heatmap-chart-container-2,
+.weather-station-chart,
+.legend,
+.hotspot-info {
   background: #a8ada1;
+}
+
+/* Match the section-header type to the other titles (nation buttons, map
+   intro): 2.6042cqw, weight 500. */
+.heatmap-title,
+.heatmap-title-2,
+.weather-station-title {
+  font-size: 2.6042cqw;
+  font-weight: 500;
 }
 
 /* Border only for the containers at/above the map legend - everything

@@ -14,14 +14,20 @@ export default function MapIntro() {
       </div>
       <div className="map-intro-text">
         <p>
-          Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          This project aims to share the data showing this damage. Using data from stats.pacificdata.org, and
+          as part of the Pacific Dataviz Challenge 2026, I’ve created a few visualization tools to understand
+          the current impact of rising sea levels.
         </p>
         <p>
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
+          The main one is the map below. This shows the evolution of the shorelines from 1999 to 2023. On top
+          of this, a fixed data point shows the positive or negative rate of shoreline change, in meters per
+          year, at each point, based on a linear regression of its historical positions. This overlap allows a
+          quick overview of where land has shrunk and where it has grown. Explore the map in depth to see in
+          detail where the shoreline has been receding.
+        </p>
+        <p>
+          The goal for the future of this project is to add as many locations as possible, allowing people to
+          visualise the damage and long term risk the region is facing.
         </p>
       </div>
     </div>

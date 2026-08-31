@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { scaleBand } from 'd3-scale'
 
-const MARGIN = { top: 8, right: 8, bottom: 60, left: 190 }
+const MARGIN = { top: 8, right: 8, bottom: 60, left: 155 }
 const MIN_CELL_WIDTH = 2
 const MIN_CELL_HEIGHT = 2
 const MIN_LABEL_SPACING_PX = 16

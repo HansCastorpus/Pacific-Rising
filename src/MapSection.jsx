@@ -16,7 +16,7 @@ addProtocol('pmtiles', protocol.tile)
 const PMTILES_URL = `pmtiles://${window.location.origin}/tiles/coastlines.pmtiles`
 const OPENFREEMAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/dark'
 
-const OCEAN_COLOR = '#0b2942'
+const OCEAN_COLOR = '#003153'
 const LAND_COLOR = '#d9d9d9'
 const URBAN_COLOR = '#a3a3a3'
 const URBAN_LAYER_IDS = new Set(['landuse_residential', 'building'])
@@ -382,9 +382,9 @@ function setupHotspotLayer(map) {
     source: HOTSPOT_SOURCE_ID,
     paint: {
       'circle-radius': 7,
-      'circle-color': ['case', ['get', 'interest'], '#4d996f', '#ff3b30'],
-      'circle-stroke-width': 1,
-      'circle-stroke-color': '#000',
+      'circle-opacity': 0,
+      'circle-stroke-width': 2,
+      'circle-stroke-color': '#ff3b30',
     },
   })
 }
@@ -1233,7 +1233,7 @@ export default function MapSection() {
                 }
                 return (
                   <div
-                    className="hotspot-row"
+                    className={`hotspot-row${selectedHotspot === hotspot.location ? ' active' : ''}`}
                     key={hotspot.location}
                     role="button"
                     tabIndex={0}
@@ -1259,7 +1259,7 @@ export default function MapSection() {
               {NATIONS.map((nation) => (
                 <button
                   type="button"
-                  className="nation-button"
+                  className={`nation-button${selectedCountry === nation.name ? ' active' : ''}`}
                   key={nation.code}
                   lang="en"
                   onClick={() => {
@@ -1285,13 +1285,7 @@ export default function MapSection() {
               )}
             </div>
             <div className="hotspot-info-text">
-              <p>
-                {selectedHotspotData
-                  ? selectedHotspotData.description
-                  : `Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`}
-              </p>
+              {selectedHotspotData?.description && <p>{selectedHotspotData.description}</p>}
             </div>
           </div>
         </div>
@@ -1427,7 +1421,11 @@ export default function MapSection() {
       </div>
       <div className="timeline-container">
         <div className="timeline-text">
-          <span>Timeline text</span>
+          <span>
+            The main timeline shows the evolution of the shorelines without the mangroves, as the available
+            time range was too short. The option to view the map with mangroves is available for those who may
+            find it of interest.
+          </span>
         </div>
         <div className="timeline-right">
           <button
@@ -1442,7 +1440,14 @@ export default function MapSection() {
               <span>Evolution</span>
             </div>
             <div className="timeline-connector timeline-connector-1" />
-            <div className="timeline-track-1" ref={track1Ref} />
+            <div
+              className="timeline-track-1"
+              ref={track1Ref}
+              onPointerDown={(e) => {
+                setActiveTimeline(1)
+                setYear(yearFromPointerX(e.clientX, e.currentTarget, SHORELINE_MIN_YEAR, SHORELINE_MAX_YEAR))
+              }}
+            />
             {YEAR_TICKS.map((left) => (
               <div key={left} className="timeline-year-tick timeline-year-tick-1" style={{ left: `${left}cqw` }} />
             ))}
@@ -1483,7 +1488,14 @@ export default function MapSection() {
               <span>Evolution</span>
             </div>
             <div className="timeline-connector timeline-connector-2" />
-            <div className="timeline-track-2" ref={track2Ref} />
+            <div
+              className="timeline-track-2"
+              ref={track2Ref}
+              onPointerDown={(e) => {
+                setActiveTimeline(2)
+                setYear(yearFromPointerX(e.clientX, e.currentTarget, MANGROVE_MIN_YEAR, SHORELINE_MAX_YEAR))
+              }}
+            />
             {MANGROVE_YEAR_TICKS.map((left) => (
               <div key={left} className="timeline-year-tick timeline-year-tick-2" style={{ left: `${left}cqw` }} />
             ))}
@@ -1616,7 +1628,11 @@ export default function MapSection() {
         <span>Weather station title</span>
       </div>
       <div className="weather-station-text">
-        <span>Weather station text</span>
+        <span>
+          This chart shows the number of meteorological stations established in each country over the years.
+          The more stations that are built, the more data can be collected, helping us stay as informed as
+          possible about the evolving situation in the Pacific.
+        </span>
       </div>
       <div className="weather-station-chart">
         {weatherStationIsotypeData && (

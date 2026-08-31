@@ -10,8 +10,14 @@ body,
 }
 
 body {
-  background: #a8ada1;
+  background: #cccec8;
+  color: #212428;
   font-family: 'Jost', sans-serif;
+  /* Browsers on macOS default to a heavier subpixel antialiasing that makes
+     text look thicker than Illustrator/Figma (which use grayscale AA) -
+     match those by forcing grayscale smoothing. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button,

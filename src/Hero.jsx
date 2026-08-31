@@ -13,14 +13,19 @@ export default function Hero() {
       <h1 className="hero-title">Pacific Rising</h1>
       <div className="hero-textbox">
         <p>
-          Placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          The word “rising” usually implies a positive thing. The sun rises, someone rises to the occasion,
+          people soar ahead to achieve great things, and plants rise towards the sky. In the nations of the
+          Pacific Ocean, something else rises: the ocean. The very element that brought life to these islands
+          is becoming the very thing that could end it. The waters of the Pacific are rising. Global warming
+          is bringing dramatic changes all around the world, but in the Pacific, this change is arriving
+          faster than anywhere else. These are nations that have the lowest impact on global warming, yet are
+          among the most exposed and vulnerable. The focus on short-term benefits is outweighing the care we
+          should have for the long term. The trends are only heading one way. The water is rising.
         </p>
         <p>
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
+          This is not only causing the direct submergence of the land. In places that seemed safer, the ocean
+          is insidiously infiltrating the land itself, invading freshwater supplies and poisoning the land
+          that grows the food that feeds the people living there. Storms are more likely to cause flooding.
         </p>
       </div>
     </div>
