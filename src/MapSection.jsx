@@ -189,11 +189,10 @@ const HEAT_INTENSITY = ['interpolate', ['linear'], ['zoom'], 8, 1, 14, 3]
 
 // The haze reads fine zoomed out but gets visually noisy up close (individual
 // point kernels become distinguishable), so it fades out over this zoom range
-// as the perpendicular tick marks (below) fade in. The range is 11-12 because
-// the rates_of_change tiles only carry data from zoom 11 up (kept small for
-// hosting) - there are no tick points to cross-fade before then.
-const ZOOM_TRANSITION_START = 11
-const ZOOM_TRANSITION_END = 11.4
+// as the perpendicular tick marks (below) fade in. The rates_of_change tiles
+// carry data from zoom 9 up.
+const ZOOM_TRANSITION_START = 9
+const ZOOM_TRANSITION_END = 11
 const HEAT_OPACITY = ['interpolate', ['linear'], ['zoom'], ZOOM_TRANSITION_START, 0.75, ZOOM_TRANSITION_END, 0]
 
 // Zoomed-out haze sources from hotspots_zoom_2 rather than raw rates_of_change
@@ -230,8 +229,8 @@ function heatLayer(id, sign, colorRamp) {
 // separate icon sets and zoom-gated layers (icon-size can't do this alone,
 // since it would scale length too).
 const TICK_WIDTH_TIERS = [
-  { tag: 'w5', px: 3, minzoom: ZOOM_TRANSITION_START, maxzoom: 12 },
-  { tag: 'w4', px: 1, minzoom: 12, maxzoom: 13 },
+  { tag: 'w5', px: 3, minzoom: ZOOM_TRANSITION_START, maxzoom: 11 },
+  { tag: 'w4', px: 1, minzoom: 11, maxzoom: 13 },
   { tag: 'w3', px: 2, minzoom: 13, maxzoom: 15 },
   { tag: 'w2', px: 2, minzoom: 15, maxzoom: 17 },
   { tag: 'w1', px: 2, minzoom: 17 },
@@ -965,6 +964,7 @@ export default function MapSection() {
   const miniTrack2Ref = useRef(null)
   const miniTrack3Ref = useRef(null)
   const [year, setYear] = useState(SHORELINE_MAX_YEAR)
+  const [mapZoom, setMapZoom] = useState(null)
   const [activeTimeline, setActiveTimeline] = useState(1)
   const [stationCounts, setStationCounts] = useState(null)
   const [seaLevelData, setSeaLevelData] = useState(null)
@@ -1152,6 +1152,8 @@ export default function MapSection() {
         }
 
         mapRef.current = map
+        setMapZoom(map.getZoom())
+        map.on('zoom', () => setMapZoom(map.getZoom()))
         map.on('load', () => {
           mapLoadedRef.current = true
           setupTickIcons(map)
@@ -1408,6 +1410,7 @@ export default function MapSection() {
           />
         </svg>
         <div className="map-year-label">{year}</div>
+        {mapZoom != null && <div className="map-zoom-label">z{mapZoom.toFixed(2)}</div>}
       </div>
       <div className="weather-chart">
         {stationCounts &&

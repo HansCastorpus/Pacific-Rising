@@ -447,6 +447,23 @@
   pointer-events: none;
 }
 
+/* Debug: live zoom readout, centred at the bottom of the map. */
+.map-zoom-label {
+  position: absolute;
+  bottom: 0.5208cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.2604cqw 0.5208cqw;
+  background: rgba(0, 0, 0, 0.6);
+  color: #f5f5f5;
+  font-size: 1cqw;
+  font-weight: 400;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  z-index: 5;
+  pointer-events: none;
+}
+
 
 /* Right of the map, top-aligned with it. Width 50pt; left edge matches the
    map's right-side height (693pt); right edge is 643pt (693-50) so the
