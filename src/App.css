@@ -1,0 +1,1363 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 41.6667cqw;
+}
+
+.hero-eyebrow {
+  position: absolute;
+  top: 5.5208cqw;
+  left: 1.25cqw;
+  right: 1.25cqw;
+  margin: 0;
+  font-size: 2.1875cqw;
+  font-weight: 300;
+  text-align: center;
+}
+
+.hero-title {
+  position: absolute;
+  top: 9.6875cqw;
+  left: 1.25cqw;
+  right: 1.25cqw;
+  margin: 0;
+  font-size: 11.7188cqw;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1;
+  text-align: center;
+}
+
+.hero-textbox {
+  position: absolute;
+  top: 25cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 65.1042cqw;
+  font-size: 1.25cqw;
+  font-weight: 300;
+  column-count: 2;
+  column-gap: 1.0417cqw;
+  padding: 1.0417cqw;
+  box-sizing: border-box;
+}
+
+.hero-textbox p {
+  margin: 0 0 1em;
+  text-align: justify;
+  text-align-last: left;
+}
+
+.banner-placeholder {
+  width: 100%;
+  height: 24.4792cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(45deg, #ccc, #ccc 10px, #ddd 10px, #ddd 20px);
+  color: #555;
+  font-size: 1.5cqw;
+  box-sizing: border-box;
+}
+
+.map-intro {
+  width: 100%;
+  height: 16.5625cqw;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9375cqw;
+  padding: 1.5625cqw;
+  background: #e8e8e8;
+  color: #555;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Column 1: titles, own 30px inner padding. Width assumed ~1/3 of the box
+   since no explicit split was given. */
+.map-intro-titles {
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.map-intro-titles h3 {
+  margin: 0 0 0.5em;
+  font-size: 2.6042cqw;
+  font-weight: 500;
+}
+
+/* Columns 2+3: one flowing text block split into two CSS columns, not two
+   independently-authored columns. */
+.map-intro-text {
+  flex: 2;
+  column-count: 2;
+  column-gap: 0.9375cqw;
+  font-size: 1.25cqw;
+  font-weight: 300;
+}
+
+.map-intro-text p {
+  margin: 0 0 1em;
+}
+
+.map-outer {
+  position: relative;
+  width: 100%;
+  height: 230.7033cqw;
+}
+
+/* Hexagon, left side unchanged from before (collinear top diagonal
+   matching the info-card's, 53pt bottom chamfer). Right side moved left:
+   top width is now 1370pt (the reference), bottom width comes out to
+   ~1478.5pt (vs the requested 1480 - 1.5pt off, since the right edge must
+   be a single x for both 90deg corners and top width wins as reference). */
+/* Below the info card, same width as it (378pt), 476pt tall. Note: this
+   overlaps the map shape for x:216.5-378, y:567-1043, since the map's left
+   edge (216.5) sits inside this box's width (0-378) over that y-range. */
+/* 25px padding on all sides, plus an extra 20px on the right (45px total)
+   and an extra 5px on the left (30px total, for the tick numbers' gutter).
+   Bars stretch to fill within it (flex: 1, so they shrink automatically as
+   padding grows), with a fixed 40px gap between the bars themselves -
+   titles are absolutely positioned off to the side so they don't add to
+   that gap. */
+.left-chart {
+  position: absolute;
+  top: 29.5313cqw;
+  left: 0;
+  width: 11.276cqw;
+  height: 24.9479cqw;
+  background: #d8d0c8;
+  display: flex;
+  padding: 1.3021cqw 2.3438cqw 1.3021cqw 1.5625cqw;
+  gap: 2.0833cqw;
+  box-sizing: border-box;
+}
+
+.left-chart-bar {
+  position: relative;
+  flex: 1;
+  margin-left: 0.4167cqw;
+  background: #8a9bb0;
+}
+
+.left-chart-bar-title {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 0.3646cqw);
+  writing-mode: vertical-rl;
+  font-size: 0.75cqw;
+  white-space: nowrap;
+  color: #444;
+}
+
+/* Diverging single-year bar: a zero line splits the bar in half, the top
+   half is the +3 max, the bottom half is the -3 max (fixed scale, not
+   derived from the data's own range). Fill grows from the zero line
+   towards whichever half matches the current value's sign. */
+.left-chart-bar-sign {
+  position: absolute;
+  right: 0.3646cqw;
+  font-size: 0.9375cqw;
+  font-weight: 500;
+  color: #2a2a2a;
+  z-index: 2;
+}
+
+.left-chart-bar-sign-plus {
+  top: 0;
+}
+
+.left-chart-bar-sign-minus {
+  bottom: 0;
+}
+
+/* Scale numbers, sitting in the bar's own left padding gutter rather than
+   inside the bar (which is already occupied by the +/- signs). */
+.left-chart-bar-ticks {
+  position: absolute;
+  top: 0;
+  right: calc(100% + 0.2604cqw);
+  height: 100%;
+}
+
+.left-chart-bar-tick {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 0.625cqw;
+  color: #444;
+  white-space: nowrap;
+}
+
+.left-chart-bar-zero {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #000;
+  z-index: 1;
+}
+
+.left-chart-bar-fill {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  transition: height 0.4s ease;
+}
+
+/* Fill color comes from the wave <path>'s own fill attribute, not a CSS
+   background - the wave's troughs need to show the bar's own background
+   through the gaps for the water-surface look. */
+.left-chart-bar-fill-positive {
+  bottom: 50%;
+}
+
+/* Fill color for the negative fills that aren't SVG-drawn (temperature's
+   negative side) - the sea-level negative wave draws its own fill via its
+   <path>, same reasoning as the positive wave above. */
+.left-chart-bar-fill-negative {
+  top: 50%;
+}
+
+.left-chart-bar-fill-temperature-negative {
+  background: #2166ac;
+}
+
+/* Soft/hazy top edge for the temperature bar's positive fill: red at the
+   zero line rising to orange. A plain filter:blur softens all four edges,
+   which leaked onto the left/right/bottom - so instead the blur lives on
+   an inner rect that's deliberately oversized past this wrapper's own
+   left/right/bottom (well beyond the blur radius), and the wrapper's own
+   overflow:hidden crops that excess away, leaving those three edges crisp.
+   Only the top isn't oversized, so its blur glow is the one edge that
+   stays visible. The wrapper's own height gets a small extra allowance
+   (1.4cqw, added inline where the height is set - roughly 4x the blur
+   radius, same ratio as the oversize margin below) above the true data
+   height for that glow to fade into, instead of eating into the data
+   height itself. */
+.left-chart-bar-fill-temperature-wrap {
+  overflow: hidden;
+}
+
+.left-chart-bar-fill-temperature {
+  position: absolute;
+  left: -1.4cqw;
+  right: -1.4cqw;
+  bottom: -1.4cqw;
+  top: 0;
+  background: linear-gradient(to top, #b2182b 0%, #f0932b 100%);
+  filter: blur(0.35cqw);
+}
+
+.map-shape {
+  position: absolute;
+  top: 21.1198cqw;
+  left: 11.276cqw;
+  width: 79.7656cqw;
+  height: 36.0938cqw;
+  clip-path: polygon(10.5452% 0%, 0% 23.3045%, 0% 92.3521%, 3.4607% 100%, 100% 100%, 100% 0%);
+  background: #b8c4cc;
+  border: 2px solid #000;
+  box-sizing: border-box;
+}
+
+/* Plain CSS border only follows the box's 4 rectangular sides - it can't
+   trace the clip-path's diagonal cuts, so those are drawn separately here
+   with an SVG path overlay. */
+.map-shape-diagonals {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  /* SVG root defaults to clipping at the viewBox edge - this extension
+     goes slightly past y=100, so that default would cut it off. */
+  overflow: visible;
+}
+
+.map-shape-diagonal-top-left {
+  transform: translate(-0.1px, -0.1px);
+}
+
+.map-shape-diagonal-bottom-left {
+  transform: translate(-0.1px, -0.1px);
+}
+
+/* Bottom-right corner of the map is a plain right angle (no chamfer there),
+   so this can sit flush without clipping concerns. */
+.map-year-label {
+  position: absolute;
+  bottom: 0.5208cqw;
+  right: 0.5208cqw;
+  padding: 0.2604cqw 0.5208cqw;
+  color: #f5f5f5;
+  font-size: 3.125cqw;
+  font-weight: 300;
+  line-height: 1;
+  z-index: 5;
+  pointer-events: none;
+}
+
+
+/* Right of the map, top-aligned with it. Width 50pt; left edge matches the
+   map's right-side height (693pt); right edge is 643pt (693-50) so the
+   bottom edge is a clean 45deg diagonal (its cut spans the full 50pt
+   width). */
+.weather-chart {
+  position: absolute;
+  top: 21.1198cqw;
+  left: 91.0417cqw;
+  width: 2.6042cqw;
+  height: 36.1458cqw;
+  background: #cfd8b8;
+  color: #444;
+  box-sizing: border-box;
+}
+
+/* One dot per cumulative weather station up to the current year, evenly
+   spaced (percent of the chart's own height) and centered horizontally. */
+.weather-station-dot {
+  position: absolute;
+  left: 50%;
+  width: 1.0417cqw;
+  height: 1.0417cqw;
+  border-radius: 50%;
+  background: #2a2a2a;
+  transform: translate(-50%, -50%);
+}
+
+/* Same vertical-title treatment as the left-chart bars. */
+.weather-chart-title {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 0.3646cqw);
+  writing-mode: vertical-rl;
+  font-size: 0.75cqw;
+  white-space: nowrap;
+  color: #444;
+}
+
+/* Below the map, spanning its bottom width (1478.5pt). Left side is plain
+   90deg; right side is a 45deg cut, height 50pt, so bottom width comes out
+   to 1428.5pt (vs the given ~1430). */
+.legend {
+  position: absolute;
+  top: 57.2135cqw;
+  left: 14.0365cqw;
+  width: 77.0573cqw;
+  height: 2.6042cqw;
+  background: #d8c8b8;
+  color: #444;
+  box-sizing: border-box;
+}
+
+.legend-text {
+  width: 100%;
+  height: 100%;
+  padding: 0.5208cqw;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+/* Below the legend, y-aligned to its bottom, x-aligned to the map's left
+   edge. 1559 x 265pt, plain rectangle. */
+.timeline-container {
+  position: absolute;
+  top: 59.8177cqw;
+  left: 14.0365cqw;
+  width: 77.0833cqw;
+  height: 13.8021cqw;
+  background: #c8c8d8;
+  display: flex;
+  color: #444;
+  box-sizing: border-box;
+}
+
+/* 300px wide, 30px padding, 2px border on the right only. */
+.timeline-text {
+  width: 15.625cqw;
+  height: 100%;
+  padding: 1.5625cqw;
+  border-right: 2px solid #000;
+  box-sizing: border-box;
+  font-size: 0.9375cqw;
+  font-weight: 300;
+}
+
+/* Holds the two timelines + their toggle buttons, to the right of the
+   timeline text box. */
+.timeline-right {
+  position: relative;
+  flex: 1;
+  height: 100%;
+}
+
+/* 60px circle, 125px from the left, 40px from the top of timeline-right. */
+.timeline-toggle-circle {
+  position: absolute;
+  top: 2.0833cqw;
+  left: 6.5104cqw;
+  width: 3.125cqw;
+  height: 3.125cqw;
+  border-radius: 50%;
+  border: none;
+  background: #8a9bb0;
+  padding: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* 1px cross marking whichever big circle is the active/selected one. */
+.timeline-toggle-circle.active::before,
+.timeline-toggle-circle.active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #000;
+}
+
+.timeline-toggle-circle.active::before {
+  width: 60%;
+  height: 1px;
+  transform: translate(-50%, -50%);
+}
+
+.timeline-toggle-circle.active::after {
+  width: 1px;
+  height: 60%;
+  transform: translate(-50%, -50%);
+}
+
+/* Everything belonging to the inactive timeline fades out and stops
+   accepting drag/click input - only the toggle circle stays interactive. */
+.timeline-group.faded {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Slider handle, same size as the small end-circles (20px). */
+/* White fill + black ring, not solid black - the year defaults to the
+   track's own end year, so a solid-black handle would sit exactly on top
+   of the (also solid black) static end-circle and be indistinguishable
+   from it. */
+.timeline-handle {
+  position: absolute;
+  width: 1.0417cqw;
+  height: 1.0417cqw;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #fff;
+  border: 0.1042cqw solid #000;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  touch-action: none;
+  z-index: 6;
+}
+
+/* "Shoreline / Evolution", stacked. 30px from timeline-text's right border
+   (timeline-right's own left edge), 25px clear of the toggle circle's left
+   edge (125px), vertically centered on the circle's center (y=70px). */
+.timeline-info-label {
+  position: absolute;
+  top: 3.6458cqw;
+  left: 1.5625cqw;
+  transform: translateY(-50%);
+  font-size: 0.8333cqw;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.timeline-info-label span {
+  display: block;
+}
+
+/* Same as timeline-info-label but for toggle circle 2 (center y=155px)
+   and centered on the circle (text-align + horizontally straddling the
+   30px-from-border/25px-before-circle box, since it's 4 lines now). */
+.timeline-info-label-2 {
+  top: 8.0729cqw;
+  text-align: center;
+}
+
+/* Timeline 1: starts 80px right of the toggle circle's right edge (185)
+   to the small circle's center, so at x=265,y=70; 877px long, ending at
+   x=1142. Both endpoints marked with a 20x20 black circle; dates sit
+   10px below each circle, centered on it. */
+.timeline-track-1 {
+  position: absolute;
+  top: 3.6458cqw;
+  left: 13.8021cqw;
+  width: 45.6771cqw;
+  height: 2px;
+  background: #000;
+}
+
+.timeline-end-circle {
+  position: absolute;
+  top: 3.125cqw;
+  width: 1.0417cqw;
+  height: 1.0417cqw;
+  border-radius: 50%;
+  background: #000;
+}
+
+/* Small tick crossing the track at each year, centered on the track's
+   nominal y (70px for timeline 1). */
+.timeline-year-tick {
+  position: absolute;
+  top: 3.6458cqw;
+  width: 1px;
+  height: 0.5208cqw;
+  background: #000;
+  transform: translate(-50%, -50%);
+}
+
+.timeline-year-tick-2 {
+  top: 8.0729cqw;
+}
+
+.timeline-end-circle-1-start {
+  left: 13.2813cqw;
+}
+
+.timeline-end-circle-1-end {
+  left: 58.9583cqw;
+}
+
+.timeline-date {
+  position: absolute;
+  top: 4.6875cqw;
+  transform: translateX(-50%);
+  font-size: 0.75cqw;
+  color: #444;
+}
+
+.timeline-date-1-start {
+  left: 13.8021cqw;
+}
+
+.timeline-date-1-end {
+  left: 59.4792cqw;
+}
+
+/* Timeline 2: identical setup to timeline 1, shifted down so there's a
+   clean 25px gap between the bottom of toggle circle 1 (100) and the top
+   of toggle circle 2 (125) - a 85px vertical offset applied to every
+   element in the group. */
+.timeline-toggle-circle-2 {
+  top: 6.5104cqw;
+}
+
+/* Connector: starts at the circle's right-center (185,70), ends 20px
+   short of the timeline's start point (265,70) so the arrowhead has room
+   to finish the line without overlapping the end circle. */
+.timeline-connector {
+  position: absolute;
+  top: 3.6458cqw;
+  left: 9.6354cqw;
+  width: 3.125cqw;
+  height: 1px;
+  background: #000;
+  transform: translateY(-50%);
+}
+
+.timeline-connector::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-left: 0.3125cqw solid #000;
+  border-top: 0.2083cqw solid transparent;
+  border-bottom: 0.2083cqw solid transparent;
+  transform: translate(100%, -50%);
+}
+
+/* Widened so it still ends exactly 20px before timeline 2's start point,
+   which moved much further right once the track was shortened to the
+   2017-2023 mangrove range. */
+.timeline-connector-2 {
+  top: 8.0729cqw;
+  width: 37.3828cqw;
+}
+
+/* Mangrove data only covers 2017-2023 (vs shoreline's full 1999-2023), so
+   this track is shorter and starts later - right-aligned with timeline 1
+   (both end at 2023), using the same px-per-year scale so the shorter
+   span accurately reflects the smaller year range. */
+.timeline-track-2 {
+  position: absolute;
+  top: 8.0729cqw;
+  left: 48.0599cqw;
+  width: 11.4193cqw;
+  height: 2px;
+  background: #000;
+}
+
+.timeline-end-circle-2-start {
+  top: 7.5521cqw;
+  left: 47.5391cqw;
+}
+
+.timeline-end-circle-2-end {
+  top: 7.5521cqw;
+  left: 58.9583cqw;
+}
+
+.timeline-date-2-start {
+  top: 9.1146cqw;
+  left: 48.0599cqw;
+}
+
+.timeline-date-2-end {
+  top: 9.1146cqw;
+  left: 59.4792cqw;
+}
+
+/* Empty spacer below the timeline, full width of the container. */
+.map-section-gap {
+  position: absolute;
+  top: 73.6198cqw;
+  left: 0;
+  width: 100%;
+  height: 3.9063cqw;
+  box-sizing: border-box;
+}
+
+/* 75pt tall, same width/left as the heatmap it sits above. */
+.heatmap-title {
+  position: absolute;
+  top: 77.5261cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 3.9063cqw;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  box-sizing: border-box;
+}
+
+/* Below the gap+title, left-aligned with the timeline/legend above it. */
+.heatmap-chart-container {
+  position: absolute;
+  top: 81.4324cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 29.5313cqw;
+  background: #c8d0d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  box-sizing: border-box;
+}
+
+/* 371px wide, same height as the heatmap it sits beside. */
+.heatmap-side-text {
+  position: absolute;
+  top: 81.4324cqw;
+  left: 73.2032cqw;
+  width: 19.3229cqw;
+  height: 29.5313cqw;
+  background: #ececec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  box-sizing: border-box;
+}
+
+/* Same track as the big timeline (877px), no circles - lives inside
+   timeline-container-2/3 (their own padding/centering applies), not as a
+   separately-positioned block. */
+.mini-timeline-wrap {
+  width: 45.6771cqw;
+}
+
+.mini-timeline-track {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: #000;
+}
+
+/* Sea-temperature timeline: the base track shows the full 1850-2025 scale
+   in a lighter grey (mostly inaccessible history), with a solid black
+   segment (.mini-timeline-accessible-range) marking the actual draggable
+   1999-2023 window on top of it. */
+.mini-timeline-track-wide {
+  background: #bbb;
+}
+
+.mini-timeline-accessible-range {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: #000;
+}
+
+/* 20x20 black circle at each end, centered on the track line. */
+.mini-timeline-circle {
+  position: absolute;
+  top: 50%;
+  width: 1.0417cqw;
+  height: 1.0417cqw;
+  border-radius: 50%;
+  background: #000;
+  transform: translateY(-50%);
+}
+
+.mini-timeline-circle-start {
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.mini-timeline-circle-end {
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+/* Draggable year handle - same white-fill/black-ring look as the main
+   timeline's handle, but positioned as a %-of-track left offset since this
+   track isn't at a fixed page position (it's centered in its container). */
+.mini-timeline-handle {
+  position: absolute;
+  top: 50%;
+  width: 1.0417cqw;
+  height: 1.0417cqw;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #fff;
+  border: 0.1042cqw solid #000;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  touch-action: none;
+  z-index: 6;
+}
+
+/* margin-top is 19px, not 10px: the track box is only 2px tall (the
+   circles overflow past it via absolute positioning), so 10px measured
+   from the track's own bottom would actually only clear the 20px circles
+   by 1px. 19px = 2px track already consumed by flow + 9px to clear the
+   circle's overflow + the intended 10px gap - matching the main
+   timeline's dates, which sit a true 10px below the circles. */
+.mini-timeline-dates {
+  position: relative;
+  margin-top: 0.9896cqw;
+  font-size: 0.75cqw;
+  color: #444;
+}
+
+.mini-timeline-date-start {
+  position: absolute;
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.mini-timeline-date-end {
+  position: absolute;
+  right: 0;
+  transform: translateX(50%);
+}
+
+/* Full-scale start label (1850) for the sea-temperature timeline, sitting
+   at the track's literal left end - lighter than the 1999/2023 labels
+   marking the actual draggable window, which sit at their own fractional
+   position via inline style. The matching end label (2025) is hidden -
+   it sat almost on top of 2023 since the accessible window is so close to
+   the track's actual end. */
+.mini-timeline-date-scale-start {
+  position: absolute;
+  color: #999;
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.timeline-container-2 {
+  position: absolute;
+  top: 110.9637cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 9.6354cqw;
+  background: #c8c8d8;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 2.0833cqw;
+  color: #444;
+  box-sizing: border-box;
+}
+
+.heatmap-title-2 {
+  position: absolute;
+  top: 120.5991cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 3.9063cqw;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  box-sizing: border-box;
+}
+
+/* Assumption: same size/alignment as the first heatmap chart container. */
+.heatmap-chart-container-2 {
+  position: absolute;
+  top: 124.5053cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 29.5313cqw;
+  background: #c8d0d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  box-sizing: border-box;
+}
+
+.heatmap-side-text-2 {
+  position: absolute;
+  top: 124.5053cqw;
+  left: 73.2032cqw;
+  width: 19.3229cqw;
+  height: 29.5313cqw;
+  background: #ececec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  box-sizing: border-box;
+}
+
+.timeline-container-3 {
+  position: absolute;
+  top: 154.0366cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 9.6354cqw;
+  background: #c8c8d8;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 2.0833cqw;
+  color: #444;
+  box-sizing: border-box;
+}
+
+/* Meteorological station chart section - title matches the heatmap titles;
+   text box is chart-width x 213pt; chart is the same size as the heatmap
+   containers; timeline matches the heatmap timelines. */
+.weather-station-title {
+  position: absolute;
+  top: 163.672cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 3.9063cqw;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  box-sizing: border-box;
+}
+
+.weather-station-text {
+  position: absolute;
+  top: 167.5783cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 11.0938cqw;
+  background: #ececec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  box-sizing: border-box;
+}
+
+.weather-station-chart {
+  position: absolute;
+  top: 178.672cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 29.5313cqw;
+  background: #c8d0d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  box-sizing: border-box;
+}
+
+/* 75px gap below the last timeline, then a 2px separator line spanning
+   the full container width. */
+.map-section-separator {
+  position: absolute;
+  top: 221.745cqw;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #000;
+}
+
+/* Placeholder copyright/sources line, 75px below the separator. */
+.map-section-copyright {
+  position: absolute;
+  top: 225.7554cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 1.0417cqw;
+  font-size: 0.8cqw;
+  color: #555;
+}
+
+/* Down / 45deg / across connector lines from each left-chart bar to its
+   matching heatmap's left border - see the path constants in
+   MapSection.jsx for the geometry these are built from. */
+.bar-heatmap-connector {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.timeline-container-4 {
+  position: absolute;
+  top: 208.2033cqw;
+  left: 14.0365cqw;
+  width: 59.1667cqw;
+  height: 9.6354cqw;
+  background: #c8c8d8;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 2.0833cqw;
+  color: #444;
+  box-sizing: border-box;
+}
+
+.map-section-top-row {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Pentagon: rectangle with the bottom-right corner replaced by a clean 45deg
+   diagonal cut (octilinear grid). Vertices (of the 378 x 567pt bounding
+   box, as %): top-left (0,0) -> top-right (100,0) ->
+   right-edge-bottom (100, 71.5168) -> 45deg cut ->
+   bottom-flat-end (57.2751, 100) -> bottom-left (0,100). Right height
+   (405.5) and bottom width (216.5) were nudged 0.5pt off the originally
+   given 405/217 so dx equals dy exactly (161.5pt each). */
+.info-card {
+  width: 19.6875cqw;
+  height: 29.5313cqw;
+  flex-shrink: 0;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 71.5168%, 57.2751% 100%, 0% 100%);
+  background: #cfcfcf;
+  border-top: 2px solid #000;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+  color: #555;
+  box-sizing: border-box;
+}
+
+/* Stacked info boxes: 10px padding, 2px bottom border, each with its own
+   fixed height. */
+.info-box {
+  width: 100%;
+  padding: 0.5208cqw;
+  border-bottom: 2px solid #000;
+  box-sizing: border-box;
+  font-size: 0.75cqw;
+}
+
+.info-box-name {
+  height: 3.4896cqw;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  font-size: 1.9792cqw;
+  font-weight: 500;
+}
+
+.info-box-capitals {
+  height: 3.5417cqw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2604cqw;
+  text-align: left;
+  font-size: 1.0417cqw;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.info-box-capitals-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5208cqw;
+}
+
+/* Same size as the info-card hotspot circles, 10px right of each capital
+   text line (via the flex row's own gap), one row per line so the two
+   circles stack on top of each other. */
+.info-box-capitals-circle {
+  flex-shrink: 0;
+  width: 1.3021cqw;
+  height: 1.3021cqw;
+  border-radius: 50%;
+  background: #f5f0dc;
+  cursor: pointer;
+}
+
+.info-box-stats {
+  height: 4.7917cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0cqw;
+  text-align: left;
+  font-size: 1.0417cqw;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.info-box-hotspots {
+  border-bottom: none;
+}
+
+.hotspot-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5208cqw;
+  gap: 0.5208cqw;
+}
+
+.hotspot-section-title {
+  font-size: 1.25cqw;
+  font-weight: 500;
+}
+
+.hotspot-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5208cqw;
+  padding-left: 0.5208cqw;
+  cursor: pointer;
+}
+
+.hotspot-name {
+  font-size: 1.0417cqw;
+  font-weight: 500;
+}
+
+.hotspot-circle {
+  width: 1.3021cqw;
+  height: 1.3021cqw;
+  border-radius: 50%;
+  background: #ff3b30;
+  flex-shrink: 0;
+}
+
+/* "Spots of interest" (everything that isn't a Negative/at-risk hotspot). */
+.hotspot-circle-interest {
+  background: #4d996f;
+}
+
+.nation-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nation-buttons {
+  width: 100%;
+  height: 16.1458cqw;
+  background: #e0e0e0;
+  color: #555;
+  box-sizing: border-box;
+}
+
+/* Top-left, full width of nation-buttons, 75px high, 10px padding. */
+.nation-buttons-title {
+  width: 100%;
+  height: 3.9063cqw;
+  padding: 0.5208cqw;
+  box-sizing: border-box;
+  font-size: 2.6042cqw;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* 22 buttons, 11 per row via an explicit 11-column grid (guarantees the
+   wrap point regardless of available width). Left and bottom padding are
+   fixed at 27px (1.4063cqw); the horizontal gap between buttons (1.5261cqw)
+   and the row-gap (0.4168cqw) are solved so the grid still fills the exact
+   width (right edge flush with the weather chart) and exact available
+   height below the title (top stays flush, unchanged). */
+.nation-buttons-grid {
+  width: 73.9584cqw;
+  box-sizing: border-box;
+  padding: 0 1.4063cqw 1.4063cqw 1.4063cqw;
+  display: grid;
+  grid-template-columns: repeat(11, 5.8996cqw);
+  grid-auto-rows: 5.2083cqw;
+  column-gap: 0.625cqw;
+  row-gap: 0.4168cqw;
+}
+
+.nation-button {
+  width: 5.8996cqw;
+  height: 5.2083cqw;
+  clip-path: polygon(0% 0%, 80% 0%, 100% 20%, 100% 100%, 0% 100%);
+  background: #ccc;
+  border: none;
+  padding: 0.3646cqw 0.3646cqw 0.3646cqw 0.4688cqw;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+/* font-size here is the starting/max size - FitText shrinks the actual
+   text below it as needed to fit on one line instead of wrapping. */
+.nation-button-label {
+  display: block;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
+  font-size: 0.8333cqw;
+  line-height: 1.3;
+}
+
+.hotspot-info {
+  width: 73.9584cqw;
+  height: 4.9479cqw;
+  background: #d0d0d0;
+  display: flex;
+  align-items: stretch;
+  gap: 0.5208cqw;
+  color: #555;
+  box-sizing: border-box;
+  font-size: 0.8cqw;
+  overflow: hidden;
+}
+
+/* Column 1: hotspot name + a link to sourcing articles below it. */
+.hotspot-info-name {
+  flex: 1;
+  padding: 0.5208cqw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5208cqw;
+  border-left: 1px solid #000;
+}
+
+/* Fixed height (the box's own available height minus the link's fixed
+   line below and the column gap) so a long name wraps and shrinks to fit
+   within it via FitTextBlock, instead of growing and pushing the source
+   link down/out of the box. */
+.hotspot-info-name-text {
+  display: block;
+  height: 2.1355cqw;
+  overflow: hidden;
+  line-height: 1.2;
+  font-size: 1.25cqw;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.hotspot-info-name a {
+  display: block;
+  color: #555;
+  font-size: 0.8333cqw;
+  line-height: 1;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Columns 2+3: one flowing text block split into two CSS columns. */
+.hotspot-info-text {
+  flex: 2;
+  padding: 0.5208cqw;
+  box-sizing: border-box;
+  column-count: 2;
+  column-gap: 0.5208cqw;
+}
+
+.hotspot-info-text p {
+  margin: 0;
+}
+
+.app {
+  min-height: 100%;
+  box-sizing: border-box;
+  max-width: 1920px;
+  margin: 0 auto;
+  container-type: inline-size;
+  padding: 0 1.1979cqw;
+}
+
+.app-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.heatmap-scroll {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.heatmap-row-label {
+  font-size: 10px;
+  text-anchor: end;
+  dominant-baseline: middle;
+  fill: #2a2a2a;
+}
+
+.heatmap-col-label {
+  font-size: 10px;
+  text-anchor: end;
+  fill: #2a2a2a;
+}
+
+/* Uniform background across every placeholder section container on the
+   page (overrides each one's earlier individual background color - same
+   selector specificity, this rule comes last). */
+.banner-placeholder,
+.map-intro,
+.info-card,
+.nation-buttons,
+.hotspot-info,
+.left-chart,
+.weather-chart,
+.legend,
+.timeline-container,
+.heatmap-title,
+.heatmap-chart-container,
+.heatmap-side-text,
+.timeline-container-2,
+.heatmap-title-2,
+.heatmap-chart-container-2,
+.heatmap-side-text-2,
+.timeline-container-3,
+.weather-station-title,
+.weather-station-text,
+.weather-station-chart,
+.timeline-container-4 {
+  background: #a8ada1;
+}
+
+/* Border only for the containers at/above the map legend - everything
+   below it (timeline, heatmaps, weather station) stays borderless. */
+.banner-placeholder,
+.map-intro,
+.info-card,
+.nation-buttons,
+.hotspot-info,
+.left-chart,
+.weather-chart,
+.legend {
+  border: 2px solid #000;
+}
+
+/* Below the legend, only the actual chart boxes get a border back - the
+   heatmap/weather-station titles and side-text stay borderless. */
+.heatmap-chart-container,
+.heatmap-chart-container-2,
+.weather-station-chart {
+  border: 2px solid #000;
+}
+
+/* info-card's left border was explicitly removed earlier - restore that
+   after the shared border rule above re-set all four sides. */
+.info-card {
+  border-left: none;
+}
+
+/* Everywhere two bordered containers sit flush against each other, thin
+   both sides at that shared edge to 1px, so the combined line reads as
+   2px total instead of 4px (2px+2px). Pairs: banner/map-intro,
+   map-intro/info-card, info-card/nation-buttons, info-card/left-chart,
+   nation-buttons/hotspot-info, left-chart/map-shape,
+   map-shape/weather-chart, map-shape/legend. */
+.banner-placeholder {
+  border-bottom-width: 1px;
+  border-left: none;
+  border-right: none;
+}
+
+.map-intro {
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-left: none;
+  border-right: none;
+}
+
+.info-card {
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.nation-buttons {
+  border-left-width: 1px;
+  border-bottom-width: 2px;
+  border-top-width: 1px;
+  border-right: none;
+}
+
+.hotspot-info {
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
+}
+
+.left-chart {
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-left: none;
+}
+
+.map-shape {
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.weather-chart {
+  border-left-width: 1px;
+}
+
+.legend {
+  border-top-width: 1px;
+}

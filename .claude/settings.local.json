@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(brew list *)",
+      "Bash(brew install *)",
+      "Bash(python3 -c ' *)",
+      "Bash(npx oxlint *)",
+      "Bash(npx vite *)"
+    ]
+  }
+}
