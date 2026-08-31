@@ -28,18 +28,39 @@
   text-align: center;
 }
 
+/* Stacked wavy lines rising behind the hero: from the vertical midpoint of
+   the title (top 9.6875cqw + half its 11.7188cqw line box) down to the
+   hero's bottom edge, which is the top of the banner below it. Each tile
+   holds one sine cycle and repeats every 30px, so the lines sit 30px
+   apart. Decorative only. */
+.hero-waves {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 15.5469cqw;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='30' viewBox='0 0 100 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 C 15 11 35 11 50 15 C 65 19 85 19 100 15' fill='none' stroke='%23000000' stroke-width='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 6.25% 30px;
+}
+
 .hero-textbox {
   position: absolute;
   top: 25cqw;
   left: 50%;
   transform: translateX(-50%);
   width: 65.1042cqw;
+  margin-top: -2px;
   font-size: 1.25cqw;
   font-weight: 300;
   column-count: 2;
   column-gap: 1.0417cqw;
   padding: 1.0417cqw;
   box-sizing: border-box;
+  z-index: 1;
+  background: #a8ada1;
 }
 
 .hero-textbox p {
@@ -103,7 +124,7 @@
 .map-outer {
   position: relative;
   width: 100%;
-  height: 230.7033cqw;
+  height: 232.0054cqw;
 }
 
 /* Hexagon, left side unchanged from before (collinear top diagonal
@@ -347,7 +368,7 @@
   top: 57.2135cqw;
   left: 14.0365cqw;
   width: 77.0573cqw;
-  height: 2.6042cqw;
+  height: 3.9063cqw;
   background: #d8c8b8;
   color: #444;
   box-sizing: border-box;
@@ -359,14 +380,29 @@
   padding: 0.5208cqw;
   box-sizing: border-box;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2604cqw;
+}
+
+.legend-icon {
+  width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  box-sizing: content-box;
+  vertical-align: middle;
+}
+
+.legend-icon-coastline {
+  width: 25px;
+  height: 20px;
 }
 
 /* Below the legend, y-aligned to its bottom, x-aligned to the map's left
    edge. 1559 x 265pt, plain rectangle. */
 .timeline-container {
   position: absolute;
-  top: 59.8177cqw;
+  top: 61.1198cqw;
   left: 14.0365cqw;
   width: 77.0833cqw;
   height: 13.8021cqw;
@@ -622,7 +658,7 @@
 /* Empty spacer below the timeline, full width of the container. */
 .map-section-gap {
   position: absolute;
-  top: 73.6198cqw;
+  top: 74.9219cqw;
   left: 0;
   width: 100%;
   height: 3.9063cqw;
@@ -632,7 +668,7 @@
 /* 75pt tall, same width/left as the heatmap it sits above. */
 .heatmap-title {
   position: absolute;
-  top: 77.5261cqw;
+  top: 78.8282cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 3.9063cqw;
@@ -647,7 +683,7 @@
 /* Below the gap+title, left-aligned with the timeline/legend above it. */
 .heatmap-chart-container {
   position: absolute;
-  top: 81.4324cqw;
+  top: 82.7345cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 29.5313cqw;
@@ -662,7 +698,7 @@
 /* 371px wide, same height as the heatmap it sits beside. */
 .heatmap-side-text {
   position: absolute;
-  top: 81.4324cqw;
+  top: 82.7345cqw;
   left: 73.2032cqw;
   width: 19.3229cqw;
   height: 29.5313cqw;
@@ -782,7 +818,7 @@
 
 .timeline-container-2 {
   position: absolute;
-  top: 110.9637cqw;
+  top: 112.2658cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 9.6354cqw;
@@ -797,7 +833,7 @@
 
 .heatmap-title-2 {
   position: absolute;
-  top: 120.5991cqw;
+  top: 121.9012cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 3.9063cqw;
@@ -812,7 +848,7 @@
 /* Assumption: same size/alignment as the first heatmap chart container. */
 .heatmap-chart-container-2 {
   position: absolute;
-  top: 124.5053cqw;
+  top: 125.8074cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 29.5313cqw;
@@ -826,7 +862,7 @@
 
 .heatmap-side-text-2 {
   position: absolute;
-  top: 124.5053cqw;
+  top: 125.8074cqw;
   left: 73.2032cqw;
   width: 19.3229cqw;
   height: 29.5313cqw;
@@ -840,7 +876,7 @@
 
 .timeline-container-3 {
   position: absolute;
-  top: 154.0366cqw;
+  top: 155.3387cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 9.6354cqw;
@@ -858,7 +894,7 @@
    containers; timeline matches the heatmap timelines. */
 .weather-station-title {
   position: absolute;
-  top: 163.672cqw;
+  top: 164.9741cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 3.9063cqw;
@@ -872,7 +908,7 @@
 
 .weather-station-text {
   position: absolute;
-  top: 167.5783cqw;
+  top: 168.8804cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 11.0938cqw;
@@ -886,7 +922,7 @@
 
 .weather-station-chart {
   position: absolute;
-  top: 178.672cqw;
+  top: 179.9741cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 29.5313cqw;
@@ -902,7 +938,7 @@
    the full container width. */
 .map-section-separator {
   position: absolute;
-  top: 221.745cqw;
+  top: 223.0471cqw;
   left: 0;
   width: 100%;
   height: 2px;
@@ -912,7 +948,7 @@
 /* Placeholder copyright/sources line, 75px below the separator. */
 .map-section-copyright {
   position: absolute;
-  top: 225.7554cqw;
+  top: 227.0575cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 1.0417cqw;
@@ -933,7 +969,7 @@
 
 .timeline-container-4 {
   position: absolute;
-  top: 208.2033cqw;
+  top: 209.5054cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
   height: 9.6354cqw;

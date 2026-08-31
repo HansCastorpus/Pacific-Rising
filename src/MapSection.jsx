@@ -777,6 +777,39 @@ function formatStat(value, unit = '') {
   return value == null ? '—' : `${value.toLocaleString()}${unit}`
 }
 
+// Tiny inline mock-ups of the map's own visuals, used as icons in the
+// legend text. Coastline: the current-year line (matches
+// shorelines-current's #ffd166) with two fainter trailing lines behind it
+// (matches shorelines-trail's fade). Tick: three short perpendicular
+// marks, deliberately not parallel/evenly spaced/same-length - mimicking
+// the real per-point rate_time ticks rather than a tidy icon.
+function CoastlineLegendIcon() {
+  return (
+    <svg className="legend-icon legend-icon-coastline" viewBox="0 0 25 20" aria-hidden="true">
+      <path d="M0,5 Q6.25,2.5 12.5,5 Q18.75,7.5 25,5" fill="none" stroke="#ffd166" strokeWidth="1.5" />
+      <path d="M0,8 Q6.25,5.5 12.5,8 Q18.75,10.5 25,8" fill="none" stroke="#ffd166" strokeWidth="1" opacity="0.6" />
+      <path d="M0,11 Q6.25,8.5 12.5,11 Q18.75,13.5 25,11" fill="none" stroke="#ffd166" strokeWidth="1" opacity="0.4" />
+      <path
+        d="M0,14 Q6.25,11.5 12.5,14 Q18.75,16.5 25,14"
+        fill="none"
+        stroke="#ffd166"
+        strokeWidth="1"
+        opacity="0.25"
+      />
+    </svg>
+  )
+}
+
+function TickLegendIcon({ color }) {
+  return (
+    <svg className="legend-icon" viewBox="0 0 15 15" aria-hidden="true">
+      <line x1="2" y1="1.5" x2="4" y2="11" stroke={color} strokeWidth="1.5" />
+      <line x1="7" y1="0.5" x2="8.5" y2="12" stroke={color} strokeWidth="1.5" />
+      <line x1="11" y1="3" x2="13.5" y2="10" stroke={color} strokeWidth="1.5" />
+    </svg>
+  )
+}
+
 const HOTSPOT_CSV_URL = `${import.meta.env.BASE_URL}data/hotspot-information.csv`
 
 // Shown in place of a country/hotspot name before the user has picked a
@@ -880,16 +913,16 @@ const WAVE_PATH_NEGATIVE = 'M0,10 Q25,7.5 50,10 Q75,12.5 100,10 L100,0 L0,0 Z'
 // needs recalculating by hand. The sea-level bar (x=59.13) now targets the
 // second heatmap slot and the temperature bar (x=149.37) targets the
 // first, since the two heatmaps' on-screen positions were swapped.
-const MAP_OUTER_VIEWBOX_HEIGHT = 4429.503
-const BAR_TO_HEATMAP_LINE_1 = 'M 59.13 1019.00 L 59.13 2513.63 L 219.50 2674.00 L 269.50 2674.00'
-const BAR_TO_HEATMAP_LINE_2 = 'M 149.37 1019.00 L 149.37 1776.87 L 219.50 1847.00 L 269.50 1847.00'
+const MAP_OUTER_VIEWBOX_HEIGHT = 4454.504
+const BAR_TO_HEATMAP_LINE_1 = 'M 59.13 1019.00 L 59.13 2538.63 L 219.50 2699.00 L 269.50 2699.00'
+const BAR_TO_HEATMAP_LINE_2 = 'M 149.37 1019.00 L 149.37 1801.87 L 219.50 1872.00 L 269.50 1872.00'
 
 // Same line style, mirrored: from the weather-station dot chart's (right
 // of the map) bottom-middle down to the weather-station chart section's
 // (further below the heatmaps) right-border middle - so the diagonal
 // bends down-left instead of down-right, and the final 50px run touches
 // the target's right border instead of its left.
-const WEATHER_CHART_TO_STATION_CHART_LINE = 'M 1773.00 1099.50 L 1773.00 3396.50 L 1455.50 3714.00 L 1405.50 3714.00'
+const WEATHER_CHART_TO_STATION_CHART_LINE = 'M 1773.00 1099.50 L 1773.00 3421.50 L 1455.50 3739.00 L 1405.50 3739.00'
 
 // Map section: an info card (pentagon, bottom-right corner diagonally cut)
 // and nation-select column on top, then the map shape below - anchored at
@@ -1080,6 +1113,16 @@ export default function MapSection() {
           attributionControl: false,
         })
         map.addControl(new AttributionControl({ compact: true }), 'top-right')
+        // The compact AttributionControl auto-expands itself the first time
+        // attributions populate (it only does so while it lacks the
+        // "maplibregl-compact" class). Add that class up front so it starts
+        // - and stays - collapsed until the user clicks it open.
+        const attribEl = mapContainer.current?.querySelector('.maplibregl-ctrl-attrib')
+        if (attribEl) {
+          attribEl.classList.add('maplibregl-compact')
+          attribEl.classList.remove('maplibregl-compact-show')
+          attribEl.removeAttribute('open')
+        }
 
         mapRef.current = map
         map.on('load', () => {
@@ -1364,12 +1407,22 @@ export default function MapSection() {
             ))
           })()}
         <div className="weather-chart-title">
-          <span>Chart title</span>
+          <span>Meteorological Stations (cumulative)</span>
         </div>
       </div>
       <div className="legend">
         <div className="legend-text">
-          <span>Legend text</span>
+          <span>
+            <CoastlineLegendIcon />
+            Coastline position for the selected year, with earlier positions shown.
+          </span>
+          <span>
+            <TickLegendIcon color="#2166ac" />
+            Positive and
+            <TickLegendIcon color="#b2182b" />
+            negative shoreline change in meters/year at each point, from a linear regression fit through its
+            historical positions.
+          </span>
         </div>
       </div>
       <div className="timeline-container">

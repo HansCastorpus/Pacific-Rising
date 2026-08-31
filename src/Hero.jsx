@@ -8,6 +8,7 @@
 export default function Hero() {
   return (
     <div className="hero">
+      <div className="hero-waves" aria-hidden="true" />
       <p className="hero-eyebrow">- Data Visualisation of the Impact of Rising Sea Levels -</p>
       <h1 className="hero-title">Pacific Rising</h1>
       <div className="hero-textbox">
