@@ -1433,7 +1433,9 @@ export default function MapSection() {
             className={`timeline-toggle-circle${activeTimeline === 1 ? ' active' : ''}`}
             onClick={() => setActiveTimeline(1)}
             aria-label="Show shoreline evolution timeline"
-          />
+          >
+            <span className="timeline-toggle-tooltip">Click to change timeline</span>
+          </button>
           <div className={`timeline-group${activeTimeline === 1 ? '' : ' faded'}`}>
             <div className="timeline-info-label">
               <span>Shoreline</span>
@@ -1479,7 +1481,9 @@ export default function MapSection() {
               setYear((y) => (y < MANGROVE_MIN_YEAR ? MANGROVE_MIN_YEAR : y))
             }}
             aria-label="Show shoreline and mangrove evolution timeline"
-          />
+          >
+            <span className="timeline-toggle-tooltip">Click to change timeline</span>
+          </button>
           <div className={`timeline-group${activeTimeline === 2 ? '' : ' faded'}`}>
             <div className="timeline-info-label timeline-info-label-2">
               <span>Shoreline</span>

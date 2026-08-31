@@ -1,4 +1,4 @@
-import bannerImg from '../images/Tarawa, Kiribati - ESA.jpg'
+import bannerImg from '../Images/Tarawa, Kiribati - ESA.jpg'
 
 // Banner image. Height spec: 470pt at the 1920pt reference frame ->
 // 24.4792vw. Spans the full width of the central container (the

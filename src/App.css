@@ -468,12 +468,52 @@
   left: 6.5104cqw;
   width: 3.125cqw;
   height: 3.125cqw;
+  box-sizing: border-box;
   border-radius: 50%;
-  border: none;
-  background: #8a9bb0;
+  border: 2px solid transparent;
+  background: #b4bcc7;
   padding: 0;
   cursor: pointer;
   z-index: 5;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+/* Active = the currently-shown timeline: accent fill + a dark ring. */
+.timeline-toggle-circle.active {
+  background: #8a9bb0;
+  border-color: #212428;
+}
+
+/* Hover (either state): darken slightly and reveal the hint tooltip. */
+.timeline-toggle-circle:hover {
+  background: #9aa4b2;
+}
+
+.timeline-toggle-circle.active:hover {
+  background: #7d8ea4;
+}
+
+.timeline-toggle-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.5cqw);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: #212428;
+  color: #f5f5f5;
+  font-size: 0.7cqw;
+  font-weight: 400;
+  line-height: 1;
+  padding: 0.3cqw 0.5cqw;
+  border-radius: 0.2cqw;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  z-index: 20;
+}
+
+.timeline-toggle-circle:hover .timeline-toggle-tooltip {
+  opacity: 1;
 }
 
 /* 1px cross marking whichever big circle is the active/selected one. */
@@ -498,11 +538,11 @@
   transform: translate(-50%, -50%);
 }
 
-/* Everything belonging to the inactive timeline fades out and stops
-   accepting drag/click input - only the toggle circle stays interactive. */
+/* The inactive timeline fades out but stays clickable - clicking anywhere
+   on its track (or dragging its handle) selects it, same as the toggle
+   circle. */
 .timeline-group.faded {
   opacity: 0.35;
-  pointer-events: none;
 }
 
 /* Slider handle, same size as the small end-circles (20px). */
@@ -579,13 +619,20 @@
   bottom: -0.625cqw;
 }
 
-/* Positioned by its center (transform) directly on the track endpoint, so
-   the size can change without re-deriving the left/top offsets. */
+/* Decorations sitting on the track band - let clicks pass through to the
+   track so the whole timeline acts as one select/scrub target. */
+.timeline-end-circle,
+.timeline-year-tick {
+  pointer-events: none;
+}
+
+/* End markers: a vertical tick at each track endpoint, like the year ticks
+   but slightly bigger. Centered on the endpoint via transform, so size can
+   change without re-deriving the left/top offsets. */
 .timeline-end-circle {
   position: absolute;
-  width: 1.5625cqw;
-  height: 1.5625cqw;
-  border-radius: 50%;
+  width: 2px;
+  height: 0.8333cqw;
   background: #000;
   transform: translate(-50%, -50%);
 }
@@ -637,6 +684,12 @@
    element in the group. */
 .timeline-toggle-circle-2 {
   top: 6.5104cqw;
+}
+
+/* Circle 2's tooltip drops below it - above would collide with circle 1. */
+.timeline-toggle-circle-2 .timeline-toggle-tooltip {
+  bottom: auto;
+  top: calc(100% + 0.5cqw);
 }
 
 /* Connector: starts at the circle's right-center (185,70), ends 20px
@@ -792,13 +845,13 @@
   background: #000;
 }
 
-/* 20x20 black circle at each end, centered on the track line. */
+/* Vertical tick at each end, matching the main timeline's end ticks
+   (2px wide, slightly taller than the year ticks), centered on the track. */
 .mini-timeline-circle {
   position: absolute;
   top: 50%;
-  width: 1.0417cqw;
-  height: 1.0417cqw;
-  border-radius: 50%;
+  width: 2px;
+  height: 0.8333cqw;
   background: #000;
   transform: translateY(-50%);
 }
