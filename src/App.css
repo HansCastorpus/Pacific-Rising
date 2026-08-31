@@ -447,8 +447,10 @@
   pointer-events: none;
 }
 
-/* Debug: live zoom readout, centred at the bottom of the map. */
+/* Debug: live zoom readout, centred at the bottom of the map. Hidden -
+   flip display back to block to check zoom levels. */
 .map-zoom-label {
+  display: none;
   position: absolute;
   bottom: 0.5208cqw;
   left: 50%;
