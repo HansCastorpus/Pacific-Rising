@@ -137,7 +137,7 @@
      line; only the separator + sources shift by this (it's below every
      connector, so no JS change needed). */
   --tl-note-h: 16cqw;
-  --conclusion-h: 24cqw;
+  --conclusion-h: 21cqw;
   /* --meteo-tighten: amount the meteo chart (and everything below it) is
      pulled UP once the meteo text box is snugged to ~0.5cqw gaps above
      and below. */
@@ -145,10 +145,23 @@
   /* --closing-banner-h: the Tarawa image below the conclusion; only the
      separator + sources shift by it (below every connector). */
   --closing-banner-h: 24.4792cqw;
+  /* --conclusion-lift: the conclusion (and everything below it) is pulled
+     up by this so it sits flush under the meteo timeline, like the chart
+     sections do with each other (was a 3.9063cqw gap). */
+  --conclusion-lift: 3.9063cqw;
+  /* --mtl-shrink: how much each mini-timeline container (.timeline-container
+     -2/-3/-4) is trimmed to tighten the gaps between the heatmap/meteo
+     sections. Sections cascade up by 1x / 2x / 3x this below each one. */
+  --mtl-shrink: 3cqw;
+  --mtl-h: calc(9.6354cqw - var(--mtl-shrink));
+  /* --conclusion-gap: pushes the whole wave + conclusion + banner + sources
+     unit down, opening a gap between it and the meteo timeline. */
+  --conclusion-gap: 3.9063cqw;
   position: relative;
   width: 100%;
   height: calc(
-    240cqw + var(--tl-note-h) + var(--conclusion-h) - var(--meteo-tighten) + var(--closing-banner-h)
+    240cqw + var(--tl-note-h) + var(--conclusion-h) - var(--meteo-tighten) + var(--closing-banner-h) -
+      var(--conclusion-lift) - (3 * var(--mtl-shrink)) + var(--conclusion-gap)
   );
 }
 
@@ -172,8 +185,42 @@
 }
 
 .map-conclusion {
-  top: calc(223.0471cqw + var(--tl-note-h) - var(--meteo-tighten));
-  height: var(--conclusion-h);
+  top: calc(
+    223.0471cqw + var(--tl-note-h) - var(--meteo-tighten) - var(--conclusion-lift) -
+      (3 * var(--mtl-shrink)) + var(--conclusion-gap)
+  );
+  /* Centred in .map-outer (the shared rule left-aligns it to the timeline). */
+  left: 50%;
+  transform: translateX(-50%);
+  /* Height hugs the content so the 1.5625cqw padding is even on all four
+     sides. --conclusion-h is just the space the layout below reserves for
+     it - keep it close to the real rendered height. */
+  height: fit-content;
+  /* Opaque like .hero-textbox so it reads on top of .conclusion-waves. */
+  background: #cccec8;
+  z-index: 1;
+}
+
+/* Stacked wavy lines behind the conclusion, same as .hero-waves. Band
+   runs from the bottom of the meteo timeline (.timeline-container-4) down
+   to the bottom of the conclusion (the closing banner starts there). Now
+   the conclusion is flush under the timeline, so the band == its height. */
+.conclusion-waves {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Band extended 90px (3 tiles = 3 more wavy lines) up past the meteo
+     timeline; bottom still meets the closing banner. */
+  top: calc(
+    219.1408cqw + var(--tl-note-h) - var(--meteo-tighten) - 90px - (3 * var(--mtl-shrink)) +
+      var(--conclusion-gap)
+  );
+  height: calc(3.9063cqw + var(--conclusion-h) - var(--conclusion-lift) + 90px);
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='30' viewBox='0 0 100 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 C 15 11 35 11 50 15 C 65 19 85 19 100 15' fill='none' stroke='%23000000' stroke-width='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 6.25% 30px;
 }
 
 /* Closing image, full width, directly below the conclusion. */
@@ -181,7 +228,10 @@
   position: absolute;
   left: 0;
   width: 100%;
-  top: calc(223.0471cqw + var(--tl-note-h) - var(--meteo-tighten) + var(--conclusion-h));
+  top: calc(
+    223.0471cqw + var(--tl-note-h) - var(--meteo-tighten) + var(--conclusion-h) -
+      var(--conclusion-lift) - (3 * var(--mtl-shrink)) + var(--conclusion-gap)
+  );
   height: var(--closing-banner-h);
   border-top: 2px solid #000;
   box-sizing: border-box;
@@ -221,6 +271,12 @@
   text-align-last: left;
 }
 
+/* No trailing gap under the last paragraph, so bottom whitespace equals
+   the top (just the box padding). */
+.map-conclusion-body p:last-child {
+  margin-bottom: 0;
+}
+
 /* Shift every section below the timeline down by --tl-note-h to clear
    .timeline-note. margin-top offsets an absolutely-positioned element the
    same as adding to `top`, so this is one rule instead of 15. */
@@ -242,18 +298,36 @@
   margin-top: var(--tl-note-h);
 }
 
-/* The meteo chart and everything under it are pulled up by --meteo-tighten. */
+/* Cascade the shrink of the mini-timeline containers: section 2 up 1x
+   --mtl-shrink, section 3 up 2x, everything from the meteo timeline down
+   up 2x (the conclusion block takes 3x via its own `top`). */
+.heatmap-title-2,
+.heatmap-chart-container-2,
+.heatmap-side-text-2,
+.timeline-container-3 {
+  margin-top: calc(var(--tl-note-h) - var(--mtl-shrink));
+}
+
+.weather-station-title,
+.weather-station-text,
+.weather-station-chart {
+  margin-top: calc(var(--tl-note-h) - (2 * var(--mtl-shrink)));
+}
+
+/* The meteo chart and everything under it are pulled up by --meteo-tighten
+   (plus the 2x mini-timeline shrink above it). */
 .timeline-container-4 {
-  margin-top: calc(var(--tl-note-h) - var(--meteo-tighten));
+  margin-top: calc(var(--tl-note-h) - var(--meteo-tighten) - (2 * var(--mtl-shrink)));
 }
 
 /* Separator + sources sit below .map-conclusion and .map-conclusion-banner,
    so they take the extra shift on top of --tl-note-h (minus the meteo
-   tighten). */
+   tighten, minus the 3x mini-timeline shrink). */
 .map-section-separator,
 .map-section-copyright {
   margin-top: calc(
-    var(--tl-note-h) + var(--conclusion-h) - var(--meteo-tighten) + var(--closing-banner-h)
+    var(--tl-note-h) + var(--conclusion-h) - var(--meteo-tighten) + var(--closing-banner-h) -
+      var(--conclusion-lift) - (3 * var(--mtl-shrink)) + var(--conclusion-gap)
   );
 }
 
@@ -1069,7 +1143,7 @@
   top: 112.2658cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
-  height: 9.6354cqw;
+  height: var(--mtl-h);
   background: #c8c8d8;
   display: flex;
   align-items: flex-start;
@@ -1127,7 +1201,7 @@
   top: 155.3387cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
-  height: 9.6354cqw;
+  height: var(--mtl-h);
   background: #c8c8d8;
   display: flex;
   align-items: flex-start;
@@ -1239,7 +1313,7 @@
   top: 209.5054cqw;
   left: 14.0365cqw;
   width: 59.1667cqw;
-  height: 9.6354cqw;
+  height: var(--mtl-h);
   background: #c8c8d8;
   display: flex;
   align-items: flex-start;
@@ -1546,7 +1620,8 @@
   width: 100%;
   overflow: hidden;
   text-align: left;
-  font-size: 0.8333cqw;
+  /* Max size - FitText shrinks per-button for names that don't fit. */
+  font-size: 1.0417cqw;
   line-height: 1.3;
 }
 

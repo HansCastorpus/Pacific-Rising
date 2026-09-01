@@ -536,7 +536,9 @@ const NATIONS = [
     // selectedCountry is used to look up station counts by that string.
     // displayName is what's actually shown on-screen.
     name: 'Micronesia, Federated State of',
-    displayName: 'Federated State of Micronesia',
+    // NBSP between "States" and "of" so FitText (one word per line) keeps
+    // them on the same line.
+    displayName: 'Federated States\u00A0of Micronesia',
     bounds: [138.0, 1.0, 163.0, 10.0],
     capital: [158.158445, 6.92347],
     islandBounds: [157.904317, 6.626992, 158.654317, 7.276992],
@@ -924,16 +926,17 @@ const WAVE_PATH_NEGATIVE = 'M0,10 Q25,7.5 50,10 Q75,12.5 100,10 L100,0 L0,0 Z'
 // second heatmap slot and the temperature bar (x=149.37) targets the
 // first, since the two heatmaps' on-screen positions were swapped.
 // viewBox height = .map-outer's height in the 1920pt frame, so path coords
-// map 1:1. .map-outer is calc(240 + --tl-note-h + --conclusion-h -
-// --meteo-tighten + --closing-banner-h)cqw =
-// (240 + 16 + 24 - 4.5937 + 24.4792)cqw = 299.8855cqw -> * 19.2 = 5757.8.
-// Points below the timeline are shifted down 16cqw (307.2pt) for
-// .timeline-note; the weather->station connector's target end is then
-// pulled up 4.5937cqw (88.2pt) with the meteo chart. --conclusion-h and
-// --closing-banner-h sit below every connector endpoint, so only this
-// height grows for them - no path coord changes.
-const MAP_OUTER_VIEWBOX_HEIGHT = 5757.8
-const BAR_TO_HEATMAP_LINE_1 = 'M 59.13 1019.00 L 59.13 2845.83 L 219.50 3006.20 L 269.50 3006.20'
+// map 1:1. .map-outer is (240 + 16 + 21 - 4.5937 + 24.4792 - 3.9063 -
+// 3*3)cqw = 283.9792cqw -> * 19.2 = 5452.4. Points below the timeline are
+// shifted down 16cqw for .timeline-note; --meteo-tighten pulls the meteo
+// chart (and the weather->station connector's target end, -88.2pt) up;
+// --mtl-shrink (3cqw) trims each mini-timeline container - heatmap 2 rises
+// 1x (-57.6pt on BAR_TO_HEATMAP_LINE_1) and the meteo chart 2x (-115.2pt
+// on WEATHER_CHART_TO_STATION_CHART_LINE). --conclusion-h/-lift/
+// --closing-banner-h act below every connector, so only this height moves
+// for them.
+const MAP_OUTER_VIEWBOX_HEIGHT = 5527.4
+const BAR_TO_HEATMAP_LINE_1 = 'M 59.13 1019.00 L 59.13 2788.23 L 219.50 2948.60 L 269.50 2948.60'
 const BAR_TO_HEATMAP_LINE_2 = 'M 149.37 1019.00 L 149.37 2109.07 L 219.50 2179.20 L 269.50 2179.20'
 
 // Same line style, mirrored: from the weather-station dot chart's (right
@@ -941,17 +944,19 @@ const BAR_TO_HEATMAP_LINE_2 = 'M 149.37 1019.00 L 149.37 2109.07 L 219.50 2179.2
 // (further below the heatmaps) right-border middle - so the diagonal
 // bends down-left instead of down-right, and the final 50px run touches
 // the target's right border instead of its left.
-const WEATHER_CHART_TO_STATION_CHART_LINE = 'M 1773.00 1099.50 L 1773.00 3640.50 L 1455.50 3958.00 L 1405.50 3958.00'
+const WEATHER_CHART_TO_STATION_CHART_LINE = 'M 1773.00 1099.50 L 1773.00 3525.30 L 1455.50 3842.80 L 1405.50 3842.80'
 
 // Annotation pointer: from just right of the "Sidenote on mangroves" title
-// (~x627, y1486), a short run right, a 45-degree elbow up-right, then a
-// fixed 50pt vertical run up to just under the mangrove timeline toggle
-// circle (center x724.5, bottom ~y1358), capped with an upward arrowhead
-// matching the timeline connectors' (6pt point / 8pt base). Same 1920pt
-// frame as the lines above; button geometry = .timeline-container (left
-// 269.5) + .timeline-text (300) + .timeline-toggle-circle-2 (left 125,
-// size 60), .timeline-container top 1173.5 + circle top 125.
-const NOTE_TO_MANGROVE_LINE = 'M 627 1486 L 679.5 1486 L 724.5 1441 L 724.5 1373'
+// (~x627), starting on the title's vertical centre-line (~y1490 - .timeline
+// -note top 74.9219cqw + 1.5625cqw padding, then ~half a 1.5625cqw line),
+// a run right, a 45-degree elbow up-right, then a fixed vertical run up to
+// just under the mangrove timeline toggle circle (center x724.5, bottom
+// ~y1358), capped with an upward arrowhead matching the timeline
+// connectors' (6pt point / 8pt base). Same 1920pt frame as the lines
+// above; button geometry = .timeline-container (left 269.5) + .timeline-
+// text (300) + .timeline-toggle-circle-2 (left 125, size 60),
+// .timeline-container top 1173.5 + circle top 125.
+const NOTE_TO_MANGROVE_LINE = 'M 627 1490 L 679.5 1490 L 724.5 1445 L 724.5 1373'
 const NOTE_TO_MANGROVE_ARROW = 'M 724.5 1367 L 720.5 1373 L 728.5 1373 Z'
 
 // Map section: an info card (pentagon, bottom-right corner diagonally cut)
@@ -1594,9 +1599,7 @@ export default function MapSection() {
       <div className="heatmap-chart-container">
         <AnomalyHeatmap csvUrl={SEA_TEMPERATURE_CSV_URL} unit="°C" activeYear={year} />
       </div>
-      <div className="heatmap-side-text">
-        <span>Heatmap side text</span>
-      </div>
+      <div className="heatmap-side-text" />
       <div className="timeline-container-2">
         <div className="mini-timeline-wrap">
           {/* Full 1850-2025 scale, shown but mostly inaccessible - only the
@@ -1671,9 +1674,7 @@ export default function MapSection() {
       <div className="heatmap-chart-container-2">
         <AnomalyHeatmap csvUrl={SEA_LEVEL_CSV_URL} unit="m" activeYear={year} />
       </div>
-      <div className="heatmap-side-text-2">
-        <span>Heatmap side text</span>
-      </div>
+      <div className="heatmap-side-text-2" />
       <div className="timeline-container-3">
         <div className="mini-timeline-wrap">
           <div className="mini-timeline-track" ref={miniTrack2Ref}>
@@ -1741,6 +1742,7 @@ export default function MapSection() {
           </div>
         </div>
       </div>
+      <div className="conclusion-waves" aria-hidden="true" />
       <div className="map-conclusion">
         <h3 className="map-conclusion-title">Conclusion</h3>
         <div className="map-conclusion-body">
