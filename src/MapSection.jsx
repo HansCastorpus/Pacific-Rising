@@ -9,6 +9,7 @@ import FitTextBlock from './FitTextBlock'
 import AnomalyHeatmap from './AnomalyHeatmap'
 import IsotypeMatrix from './IsotypeMatrix'
 import { SEA_LEVEL_CSV_URL, SEA_TEMPERATURE_CSV_URL, parseAnomalyCsv } from './anomalyData'
+import closingBannerImg from '../Images/South_Tarawa_from_the_air.jpg'
 
 const protocol = new Protocol()
 addProtocol('pmtiles', protocol.tile)
@@ -924,11 +925,14 @@ const WAVE_PATH_NEGATIVE = 'M0,10 Q25,7.5 50,10 Q75,12.5 100,10 L100,0 L0,0 Z'
 // first, since the two heatmaps' on-screen positions were swapped.
 // viewBox height = .map-outer's height in the 1920pt frame, so path coords
 // map 1:1. .map-outer is calc(240 + --tl-note-h + --conclusion-h -
-// --meteo-tighten)cqw = (240 + 16 + 24 - 4.5937)cqw = 275.4063cqw ->
-// * 19.2 = 5287.8. Points below the timeline are shifted down 16cqw
-// (307.2pt) for .timeline-note; the weather->station connector's target
-// end is then pulled up 4.5937cqw (88.2pt) with the meteo chart.
-const MAP_OUTER_VIEWBOX_HEIGHT = 5287.8
+// --meteo-tighten + --closing-banner-h)cqw =
+// (240 + 16 + 24 - 4.5937 + 24.4792)cqw = 299.8855cqw -> * 19.2 = 5757.8.
+// Points below the timeline are shifted down 16cqw (307.2pt) for
+// .timeline-note; the weather->station connector's target end is then
+// pulled up 4.5937cqw (88.2pt) with the meteo chart. --conclusion-h and
+// --closing-banner-h sit below every connector endpoint, so only this
+// height grows for them - no path coord changes.
+const MAP_OUTER_VIEWBOX_HEIGHT = 5757.8
 const BAR_TO_HEATMAP_LINE_1 = 'M 59.13 1019.00 L 59.13 2845.83 L 219.50 3006.20 L 269.50 3006.20'
 const BAR_TO_HEATMAP_LINE_2 = 'M 149.37 1019.00 L 149.37 2109.07 L 219.50 2179.20 L 269.50 2179.20'
 
@@ -1755,6 +1759,9 @@ export default function MapSection() {
             difficult balance between the benefits of our work and the environmental cost of producing them.
           </p>
         </div>
+      </div>
+      <div className="map-conclusion-banner">
+        <img src={closingBannerImg} alt="Aerial view of South Tarawa, Kiribati" />
       </div>
       <div className="map-section-separator" />
       <div className="map-section-copyright">
